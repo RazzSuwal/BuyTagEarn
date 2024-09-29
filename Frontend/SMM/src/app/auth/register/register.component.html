@@ -1,0 +1,122 @@
+<section class="login relative overflow-hidden bg-gradient-to-r from-white from-5% to-orange/5" style="margin-top: 5px;">
+    <div class="shapes">
+        <div class="shape">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="shape">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- container -->
+    <div class="relative container">
+        <!-- take minimum screen height -->
+        <div class="min-h-screen flex flex-col">
+            <!-- grid -->
+            <div class="relative grid lg:grid-cols-2 gap-10">
+                <!-- media col -->
+                <div class="lg:order-last"><img src=""
+                    srcset="
+                    assets/images/earn-bg.png 500w
+                   "
+                    class="max-h-80 mx-auto lg:max-h-[85vh] lg:object-contain"
+                    alt="" />
+
+                    <img src=""
+                         srcset="
+                         assets/images/Instagram-bg.png 1600w,
+                         
+                        "
+                         class="max-h-80 mx-auto lg:max-h-[85vh] lg:object-contain"
+                         alt="" />
+                         
+                </div>
+                <!-- form col -->
+                <div class="z-10 relative">
+                    <div class="lg:max-w-xl">
+                        <div class="logo lg:justify-start mb-10 lg:mb-20 mx-auto lg:mx-0">
+                            <a routerLink="/">
+                                <img src="assets/images/BTElogobg.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="text-center lg:text-left mb-8 md:mb-12 lg:mb-24">
+                            <h1 class="text-4xl font-semibold mb-2">Register!</h1>
+                            <p class="text-black-300">Please sign-up for your account</p>
+                        </div>
+                        <form class="form-grey" (ngSubmit)="register()" [formGroup]="registerForm" >
+                            <div class="grid lg:grid-cols-2 gap-5 mb-5">
+                                <!-- @Html.HiddenFor(model => model.AppUserId)
+                                @Html.HiddenFor(model => model.IdentityUserId)
+                                @Html.HiddenFor(model => model.IsActive) -->
+                                <!-- col -->
+                                <!-- <div>
+                                    <label asp-for="FirstName" class="mb-2">First Name</label>
+                                    <input type="text" asp-for="FirstName" placeholder="">
+                                    <span asp-validation-for="FirstName" class="text-danger" style="color:orangered"></span>
+                                </div> -->
+                                <!-- col -->
+                                <div>
+                                    <label  class="mb-2">Name</label>
+                                    <input formControlName="name" type="text" class="form-control" placeholder="">
+                                    <span class="text-danger" style="color:orangered"></span>
+                                </div>
+                                <!-- col -->
+                                <div>
+                                    <label class="mb-2">Email</label>
+                                    <input formControlName="email" type="email" class="form-control" placeholder="">
+                                    <span class="text-danger" style="color:orangered"></span>
+                                </div>
+                                <div>
+                                    <label class="mb-2">PhoneNumber</label>
+                                    <input formControlName="phoneNumber" type="text" class="form-control">
+                                    <span class="text-danger" style="color:orangered"></span>
+                                </div>
+                                <div>
+                                    <label class="mb-2">Password</label>
+                                    <input formControlName="password" type="password" class="password-input"
+                                           placeholder="●●●●●●●">
+                                    <span class="text-danger" style="color:orangered"></span>
+                                </div>
+                                <div>
+                                    <label class="mb-2">Re-enter Password</label>
+                                    <div class="password-wrap">
+                                        <input type="password" class="password-input"
+                                               placeholder="●●●●●●●">
+                                        <button class="password-toggle"></button>
+                                    </div>
+                                    <span class="text-danger" style="color:orangered"></span>
+                                </div>
+                            </div>
+                            <div class="submit-btn mt-10">
+                                <button class="btn btn--full" type="submit">
+                                    Sign up
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-danger" style="color:orangered"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- login footer -->
+            <div class="flex flex-col md:flex-row items-center justify-center md:justify-between text-center md:text-left gap-5 border-t border-border py-8 md:py-10 mt-auto">
+                <p class="text-black-300 font-semibold">
+                    Already have an account?
+                    <a routerLink="/login" class="text-black block md:inline">Login to your account</a>
+                </p>
+                <p class="text-black-300 font-semibold">
+                    Got questions?
+                    <a href="tel:+977 9810026560" class="text-black block md:inline">+977 9810026560</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

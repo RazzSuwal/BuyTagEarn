@@ -1,0 +1,107 @@
+<body class="background-theme-grey">
+
+    <app-navbar></app-navbar>
+    <main class="site-wrapper" id="site-wrapper">
+
+        <section class="hero relative overflow-hidden">
+            <div class="shapes">
+                <div class="shape">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="shape">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <section class="contact">
+                <div class="container">
+                    <div class="contact__row">
+                        <div class="contact__col--txt">
+                            <h5 class="contact-subtitle">Contact Us</h5>
+                            <h2 class="contact-title">Get in Touch With Us</h2>
+                            <p>
+                                Thank you for reaching out to us! We value your feedback and inquiries and are here to
+                                assist you. Please feel free to contact us using the form or through the provided
+                                contact information.
+                            </p>
+                            <div class="info-cards">
+                                <div class="info-card">
+                                    <div class="icon">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h4 class="title">Our Location</h4>
+                                        <p>Byasi, Bhaktapur</p>
+                                    </div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="icon">
+                                        <i class="fa-solid fa-headphones-simple"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h4 class="title">Phone Number</h4>
+                                        <p>(+977) 9810 026 560</p>
+                                    </div>
+                                </div>
+                                <div class="info-card">
+                                    <div class="icon">
+                                        <i class="fa-regular fa-envelope"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h4 class="title">Email Address</h4>
+                                        <p>{{ email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact__col--form">
+                            <div class="contact__form-wrap">
+                                <div class="shapes">
+                                    <img src="~/Themes/Shared/Default/images/ct-dots-1.svg" alt="" class="shape-1" />
+                                    <img src="~/Themes/Shared/Default/images/ct-dots-2.svg" alt="" class="shape-2" />
+                                </div>
+                                <form class="contact__form">
+                                    <div class="grid gap-5 mb-5">
+                                        <!-- col -->
+                                        <div>
+                                            <label for="">Full Name</label>
+                                            <input name="txtFullName" id="txtFullName" type="text" />
+                                        </div>
+                                        <!-- col -->
+                                        <div>
+                                            <label for="">Email</label>
+                                            <input name="txtEmail" id="txtEmail" type="email" />
+                                        </div>
+                                        <!-- col -->
+                                        <div>
+                                            <label for="">Phone</label>
+                                            <input name="txtPhone" id="txtPhone" type="text" />
+                                        </div>
+                                        <!-- col -->
+                                        <div>
+                                            <label for="">Your Message</label>
+                                            <textarea name="txtMessage" id="txtMessage" cols="30" rows="10"></textarea>
+                                        </div>
+                                        <!-- col -->
+                                        <div>
+                                            <button type="button" id="btnSaveContactQuery"
+                                                class="btn btn--full">Submit</button>
+                                        </div>
+                                        <div id="validationSummaryContactUs" class="text-danger">
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+</body>

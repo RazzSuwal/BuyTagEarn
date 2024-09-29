@@ -1,0 +1,81 @@
+<section class="login relative overflow-hidden bg-gradient-to-b from-red from-0% via-orange via-40% to-40% to-white">
+    <div class="shapes">
+        <div class="shape">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="shape">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- container -->
+    <div class="relative container">
+        <!-- take minimum screen height -->
+        <div class="min-h-screen flex flex-col">
+            <!-- grid -->
+            <div class="relative flex flex-col justify-center flex-auto">
+                <!-- form col -->
+                <div class="bg-white backdrop-blur-lg px-5 py-10 md:px-10 my-10 shadow-md rounded-lg w-full lg:max-w-xl mx-auto">
+                    <div class="logo lg:justify-start mb-10 mx-auto">
+                        <a href="/">
+                            <img src="assets/images/BTElogobg.png" alt="" />
+                        </a>
+                    </div>
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-semibold mb-2">Welcome back!</h1>
+                        <p class="text-black-300">Please login to your account</p>
+                    </div>
+                    <form id="loginForm" class="form-lg form-grey" (ngSubmit)="login()" [formGroup]="loginForm">
+                        <input type="hidden" />
+                        <div class="form-group ">
+                            <label for="email" class="mb-2">Email</label>
+                            <input id="email" formControlName="email" type="email" placeholder="example@gmail.com">
+                            <span class="text-danger" style="color:orangered"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label for="password" id="password" class="mb-2">Password</label>
+                            <div class="password-wrap">
+                                <input type="password" formControlName="password" class="password-input" asp-for="Password" autocomplete="off"
+                                       placeholder="******">
+                                <button class="password-toggle"></button>
+                                <span class="text-danger" style="color:orangered"></span>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="flex items-center justify-between">
+                            <div class="radio">
+                                <input type="checkbox" value="" id="checkRemember">
+                                <label for="checkRemember" class="">Remember me</label>
+                            </div>
+                            <a href="/account/forgotpassword" class="font-semibold">Forgot password?</a>
+                        </div>
+
+                        <div class="submit-btn mt-10">
+                            <button value="login" id="btnLogin" name="button" class="btn btn--full" type="submit">Login</button>
+                        </div>
+                        <br />
+                        <div style="text-align:center; color:orangered">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- login footer -->
+            <div class="flex flex-col md:flex-row items-center justify-center md:justify-between text-center md:text-left gap-5 border-t border-border py-8 md:py-10 mt-auto">
+                <p class="text-black-300 font-semibold">
+                    Don't have an account yet?
+                    <a routerLink="/register" class="text-black">Create a account</a>
+                </p>
+                <p class="text-black-300 font-semibold">
+                    Got questions?
+                    <a href="tel:+977 9810026560" class="text-black">+977 9810026560</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

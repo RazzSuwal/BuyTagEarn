@@ -1,0 +1,65 @@
+<header id="header" class="header">
+    <div class="container mx-auto">
+        <div class="inner">
+            <a routerLink="/" class="logo btnMainPageContent">
+                <!-- BuyTag(#)Earn -->
+                <img src="assets/images/BTElogobg.png" alt="....">
+            </a>
+            <div class="hidden desktop:block">
+                <nav class="navbar">
+                    <ul class="navbar-list">
+                        <li class="nav-item menu-Home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                            <a class="btnMainPageContent" routerLink="/">Home</a>
+                        </li>
+                        <li class="nav-item menu-Pricing" routerLinkActive="active">
+                            <a class="btnMainPageContent" routerLink="/about">What are we?</a>
+                        </li>
+                        <li class="nav-item menu-ContactUs" routerLinkActive="active">
+                            <a class="btnMainPageContent"routerLink="/contactus">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="hidden desktop:block">
+                <div class="header__btnwrap">
+                    <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn btn--transparent">Log in</a>
+                    <a *ngIf="!authService.isLoggedIn()" routerLink="/register" class="btn">Register</a>
+                    
+                    <a *ngIf="authService.isLoggedIn()" (click)="onLogout()" class="btn">Logout</a>
+
+                    <a *ngIf="isUser()" routerLink="/dashboard" class="btn">Dashboard</a>
+
+                    <a *ngIf="isAdmin()" routerLink="/dashboard" class="btn">Dashboard</a>
+
+                </div>
+            </div>
+            <button class="nav-toggle sidemenu-open desktop:hidden"></button>
+        </div>
+    </div>
+</header>
+
+<!-- responsive type -->
+<!-- <div class="sidemenu" id="sidemenu">
+    <div class="inner">
+        <div class="exit sidemenu-close"></div>
+        <div class="sidemenu__scroll">
+            <nav class="navbar">
+                <ul class="navbar-list">
+                    <li class="nav-item menu-Home active">
+                        <a class="btnMainPageContent" data-val="Home">Home</a>
+                    </li>
+                    <li class="nav-item menu-Pricing">
+                        <a class="btnMainPageContent" data-val="Pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item menu-ContactUs">
+                        <a class="btnMainPageContent" data-val="ContactUs">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header__btnwrap">
+                    <a href="/admin/dashboard" class="btn">Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="sidemenu-bg sidemenu-close"></div>

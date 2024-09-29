@@ -1,0 +1,55 @@
+<body class="mainformbody">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form id="msform" (ngSubmit)="submit()" [formGroup]="postForm">
+                <!-- progressbar -->
+                <ul id="progressbar">
+                    <li class="active" style="color: black;">Our Policy</li>
+                    <li style="color: black;">Product Details</li>
+                    <li style="color: black;">Post Details</li>
+                </ul>
+                <!-- fieldsets -->
+                <fieldset>
+                    <h2 class="fs-title">Our Policy</h2>
+                    <h3 class="fs-subtitle">By agreeing to this policy, you consent to work with your Instagram account under the following conditions:</h3>
+                        <p>You will not post unwanted or unsolicited content.</p>
+                        <p>You will maintain privacy and confidentiality regarding sensitive information.</p>
+                        <p>You will adhere to all relevant guidelines and regulations associated with Instagram.</p>
+
+                    <div >
+                        <input class="" type="checkbox" id="policyCheckbox" name="policy" style="width: 13px;">
+                        <label class="actionn" for="policyCheckbox">I agree to the policy</label>
+                    </div>
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+                </fieldset>                
+                
+                <fieldset >
+                    <h2 class="fs-title">Product Details</h2>
+                    <h3 class="fs-subtitle">Fill in your post product details</h3>
+                    <input type="text" formControlName="brandName" name="" placeholder="Product Brand Name Eg: Newmew, GoldStar etc.."/>
+                    <input type="text" formControlName="productType" placeholder="Product Type Eg: Glass, Shoes etc.."/>
+                    <input type="text" formControlName="productName" placeholder="Product Name (Optional):"/>
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+                </fieldset>
+                <fieldset >
+                    <h2 class="fs-title">Post Details</h2>
+                    <h3 class="fs-subtitle">Fill in your post details</h3>
+                    <input type="text" formControlName="postUrl" placeholder="Post Url Eg: https//www.instagram.com/username/yourpostkey"/>
+                    <div style="margin: 0px;">
+                        <label class="actionn" style="margin-right: 23px;" for="">Product Posted On:</label>
+                        <input class="" type="date" formControlName="postedOn" style="width: 84% !important;" name="" placeholder=""/>
+                    </div>
+                    
+                    <div>
+                        <input class="" type="checkbox" formControlName="isTag" style="width: 13px;" placeholder="">
+                        <label class="actionn" for="">Is tag to both product brand instagram and bugtagearn instagram?</label>
+                    </div>
+                    
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
