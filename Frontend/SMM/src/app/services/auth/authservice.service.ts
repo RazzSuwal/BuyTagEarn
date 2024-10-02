@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +21,24 @@ export class AuthserviceService {
     return this.http.post(this.baseUrl + 'login', user);
   }
 
-  getUserRole(): string | null {
-    debugger
+  getUserRole(): Observable<string | null> {
     const token = localStorage.getItem('authToken');
     if (token) {
-      const userDetails = JSON.parse(atob(token.split('.')[1])); 
-      return userDetails.role; 
+        const userDetails = JSON.parse(atob(token.split('.')[1]));
+        const email = userDetails.email;
+
+        return this.http.get<string>(`${this.baseUrl}GetUserRole/${email}`, {
+
+        });
     }
-    return null;
-  }
+    return of(null);
+}
+
   getUserID(): string | null {
     const token = localStorage.getItem('authToken');
     if (token) {
-      const userDetails = JSON.parse(atob(token.split('.')[1])); 
-      return userDetails.sub; 
+      const userDetails = JSON.parse(atob(token.split('.')[1]));
+      return userDetails.sub;
     }
     return null;
   }

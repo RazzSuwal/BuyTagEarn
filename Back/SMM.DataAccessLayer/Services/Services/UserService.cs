@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SMM.DataAccessLayer.Services.IServices;
-using SMM.Models.Domain;
 using SMM.Models.DTO;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
 
 namespace SMM.DataAccessLayer.Services.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly IConfiguration _configuration;
 
@@ -60,7 +53,7 @@ namespace SMM.DataAccessLayer.Services.Services
             {
                 return ex.Message;
             }
-            
+
         }
         public async Task<dynamic> GetUserPost(string userId)
         {

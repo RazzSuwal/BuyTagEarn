@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SMM.Data;
 using SMM.DataAccessLayer.Services.IServices;
@@ -51,7 +50,7 @@ namespace SMM.Areas.Identity.Controllers
             return Ok(_response);
         }
         [HttpPost("AssignRole")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDTO model)
         {
             var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
@@ -71,6 +70,15 @@ namespace SMM.Areas.Identity.Controllers
             var message = "Welcome to the Dashboard!";
             return Ok(new { Message = message });
         }
+
+        [HttpGet("GetUserRole/{email}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserRole(string email)
+        {
+            var roleName = await _authService.GetUserRole(email);
+            return Ok(roleName);
+        }
+
     }
 }
 

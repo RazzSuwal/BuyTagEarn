@@ -2,13 +2,9 @@
 using Microsoft.IdentityModel.Tokens;
 using SMM.DataAccessLayer.Services.IServices;
 using SMM.Models.Domain;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SMM.DataAccessLayer.Services.Services
 {
@@ -33,6 +29,7 @@ namespace SMM.DataAccessLayer.Services.Services
                 ),
                 new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id),
                 new Claim(JwtRegisteredClaimNames.Name, applicationUser.UserName),
+                //new Claim(JwtRegisteredClaimNames.Nonce, applicationUser.Role),
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -41,7 +38,7 @@ namespace SMM.DataAccessLayer.Services.Services
                 Issuer = _jwtOptions.Issuer,
                 Subject = new ClaimsIdentity(claimList),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

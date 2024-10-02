@@ -24,10 +24,10 @@
                 <div class="header__btnwrap">
                     <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn btn--transparent">Log in</a>
                     <a *ngIf="!authService.isLoggedIn()" routerLink="/register" class="btn">Register</a>
-                    
+
                     <a *ngIf="authService.isLoggedIn()" (click)="onLogout()" class="btn">Logout</a>
 
-                    <a *ngIf="isUser()" routerLink="/dashboard" class="btn">Dashboard</a>
+                    <!-- <a *ngIf="isUser()" routerLink="/dashboard" class="btn">Dashboard</a> -->
 
                     <a *ngIf="isAdmin()" routerLink="/dashboard" class="btn">Dashboard</a>
 

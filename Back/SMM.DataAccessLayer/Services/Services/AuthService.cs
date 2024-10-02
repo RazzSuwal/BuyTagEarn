@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SMM.Data;
 using SMM.DataAccessLayer.Services.IServices;
 using SMM.Models.Domain;
 using SMM.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMM.DataAccessLayer.Services.Services
 {
@@ -31,7 +27,7 @@ namespace SMM.DataAccessLayer.Services.Services
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
             if (user != null)
             {
-                if(!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
                 {
                     //create new role if it isnot exit
                     _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
@@ -39,7 +35,7 @@ namespace SMM.DataAccessLayer.Services.Services
                 await _userManager.AddToRoleAsync(user, roleName);
                 return true;
             }
-            
+
             return false;
         }
 
@@ -47,9 +43,9 @@ namespace SMM.DataAccessLayer.Services.Services
         {
             var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDTO.UserName.ToLower());
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
-            if (user==null || isValid == false) 
+            if (user == null || isValid == false)
             {
-                return new LoginResponseDTO() { User = null, Token = "", Message= "User NotFound!" };
+                return new LoginResponseDTO() { User = null, Token = "", Message = "User NotFound!" };
             }
             //if user was founf, Generate JWT Token
             var token = _jwtTokenGenerator.GenerateToken(user);
@@ -84,9 +80,22 @@ namespace SMM.DataAccessLayer.Services.Services
             try
             {
                 var result = await _userManager.CreateAsync(user, registrationRequestDTO.Password);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
-                    var userToReturn = _db.ApplicationUsers.First(u=>u.UserName == registrationRequestDTO.Email);
+                    //// Check if any roles were provided from the frontend
+                    var roleName = string.Empty;
+                    if (registrationRequestDTO.Role == null)
+                    {
+                        roleName = "User";
+                    }
+                    else
+                    {
+                        roleName = registrationRequestDTO.Role;
+                    }
+
+                    await _userManager.AddToRoleAsync(user, roleName);
+
+                    var userToReturn = _db.ApplicationUsers.First(u => u.UserName == registrationRequestDTO.Email);
 
                     UserDTO userDTO = new()
                     {
@@ -123,5 +132,23 @@ namespace SMM.DataAccessLayer.Services.Services
                 Email = email
             };
         }
+        public async Task<string> GetUserRole(string email)
+        {
+            var user = await _db.ApplicationUsers.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+            if (user != null)
+            {
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                if (userRoles.Any())
+                {
+                    return userRoles.First();
+                }
+            }
+
+            return null;
+        }
+
     }
 }

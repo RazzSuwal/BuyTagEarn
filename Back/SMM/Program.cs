@@ -24,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
@@ -79,7 +80,8 @@ builder.Services.AddCors(o =>
 {
     o.AddPolicy("myCorsPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        //policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("http://localhost:63373").AllowAnyHeader().AllowAnyMethod();
     });
 });
 

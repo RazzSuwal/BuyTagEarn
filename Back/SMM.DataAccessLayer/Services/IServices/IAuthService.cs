@@ -1,10 +1,5 @@
 ﻿using SMM.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMM.DataAccessLayer.Services.IServices
 {
@@ -14,5 +9,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
         Task<bool> AssignRole(string email, string roleName);
         UserDTO GetLoggedInUserDetails(ClaimsPrincipal user);
+        Task<string> GetUserRole(string email);
     }
 }
