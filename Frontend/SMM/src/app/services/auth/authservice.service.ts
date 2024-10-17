@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
@@ -23,16 +23,22 @@ export class AuthserviceService {
 
   getUserRole(): Observable<string | null> {
     const token = localStorage.getItem('authToken');
+  
     if (token) {
-        const userDetails = JSON.parse(atob(token.split('.')[1]));
-        const email = userDetails.email;
-
-        return this.http.get<string>(`${this.baseUrl}GetUserRole/${email}`, {
-
-        });
+      const userDetails = JSON.parse(atob(token.split('.')[1]));
+      const email = userDetails.email;
+  
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Include JWT token in headers
+      });
+  
+      return this.http.get(`${this.baseUrl}GetUserRole/${email}`, { headers, responseType: 'text' });
     }
+  
     return of(null);
-}
+  }
+  
 
   getUserID(): string | null {
     const token = localStorage.getItem('authToken');

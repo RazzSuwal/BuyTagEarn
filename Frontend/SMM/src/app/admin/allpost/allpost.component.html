@@ -1,0 +1,39 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="adjectmargin">
+    <p>allpost works!</p>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>BrandName</th>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Is Tag</th>
+                <th>Is Paid</th>
+                <th>User Name</th>
+                <th>Created Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of posts; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{post.BrandName}}</td>
+                <td>{{post.ProductName}}</td>
+                <td>{{post.ProductType}}</td>
+                <td>{{post.IsTag}}</td>
+                <td>{{post.IsPaid}}</td>
+                <td>{{post.UserId}}</td>
+                <td>{{post.CreatedDate}}</td>
+                <td>
+                    <button *ngIf="post.IsApproved == 0" class="btn btn-primary" (click)="approved(post.UserPostId, 1)">Approved</button>
+                    <a class="btn btn-primary" href="{{post.PostUrl}}" target="_blank">View</a>
+                    <button *ngIf="post.IsApproved == 1" class="btn btn-secondary" (click)="approved(post.UserPostId, 0)"> Cancel</button>
+                </td>
+
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+

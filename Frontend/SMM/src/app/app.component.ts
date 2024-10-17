@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SharedModule } from './shared/shared.module';
+import { AdminModule } from './admin/admin.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AdminModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

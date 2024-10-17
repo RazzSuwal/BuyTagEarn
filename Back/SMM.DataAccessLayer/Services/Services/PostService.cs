@@ -15,7 +15,7 @@ namespace SMM.DataAccessLayer.Services.Services
             _configuration = configuration;
         }
 
-        public async Task<dynamic> GetAllUserPost(string type)
+        public async Task<dynamic> GetAllUserPost(string? type)
         {
             try
             {
@@ -29,7 +29,8 @@ namespace SMM.DataAccessLayer.Services.Services
                     }
                     else
                     {
-                        query = @"SELECT * FROM [dbo].[UserPost] WHERE IsApproved = 0";
+                        //query = @"SELECT * FROM [dbo].[UserPost] WHERE IsApproved = 0";
+                        query = @"SELECT * FROM [dbo].[UserPost]";
                     }
 
                     // Fetch the result
@@ -58,12 +59,12 @@ namespace SMM.DataAccessLayer.Services.Services
                     string query = "";
                     if (IsApproved == 1)
                     {
-                        query = @"UPDATE [dbo].[UserPost] SET IsApproved = 1 WHERE PostId = @PostId";
+                        query = @"UPDATE [dbo].[UserPost] SET IsApproved = 1 WHERE UserPostId = @PostId";
 
                     }
                     else
                     {
-                        query = @"UPDATE [dbo].[UserPost] SET IsApproved = 0 WHERE PostId = @PostId";
+                        query = @"UPDATE [dbo].[UserPost] SET IsApproved = 0 WHERE UserPostId = @PostId";
                     }
                     var parameters = new
                     {

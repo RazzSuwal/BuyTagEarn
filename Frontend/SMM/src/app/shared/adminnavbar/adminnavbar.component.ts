@@ -13,7 +13,8 @@ export class AdminnavbarComponent implements OnInit{
 
   constructor(public authService: AuthserviceService,
     private router: Router,
-    private _commonservice: CommonService) {
+    private _commonservice: CommonService,
+  ) {
 
 
   }
@@ -26,7 +27,11 @@ export class AdminnavbarComponent implements OnInit{
       this.userRole= role;
 
     });
-    console.log(this.userRole);
 
+  }
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+    this._commonservice.successAlert("Success", "Logout Successful!");
   }
 }

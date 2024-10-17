@@ -4,6 +4,7 @@ import { MaindashboardComponent } from './maindashboard/maindashboard.component'
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminnavbarComponent } from './adminnavbar/adminnavbar.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -15,7 +16,8 @@ import { AdminnavbarComponent } from './adminnavbar/adminnavbar.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    DataTablesModule
   ],
   exports: [NavbarComponent, AdminnavbarComponent] 
 })

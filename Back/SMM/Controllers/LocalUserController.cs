@@ -31,7 +31,7 @@ namespace SMM.Controllers
 
             if (userDetails == null || string.IsNullOrEmpty(userDetails.ID))
             {
-                return BadRequest("User ID is missing");
+                return BadRequest("User is missing");
             }
 
             model.UserId = userDetails.ID;

@@ -1,0 +1,37 @@
+--Tables Query
+
+--UserPost Table
+
+USE [SMMDB]
+GO
+
+/****** Object:  Table [dbo].[UserPost]    Script Date: 10/17/2024 8:24:53 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserPost](
+	[UserPostId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [varchar](255) NULL,
+	[ProductName] [varchar](255) NULL,
+	[PostUrl] [varchar](max) NULL,
+	[ProductType] [varchar](255) NULL,
+	[BrandName] [varchar](255) NULL,
+	[IsTag] [bit] NULL,
+	[PostedOn] [datetime] NULL,
+	[IsPaid] [bit] NULL,
+	[CreatedDate] [datetime] NULL,
+	[IsApproved] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserPostId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[UserPost] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+
+

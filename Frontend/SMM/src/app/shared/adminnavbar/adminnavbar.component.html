@@ -47,7 +47,7 @@
         <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <nav class="sidebar__inner" role="navigation">
+    <nav class="sidebar__inner">
         <!-- Main Menu -->
         <div class="side-menu-container">
             <!-- Brand -->
@@ -66,23 +66,28 @@
                             <span class="nav__list-text">Dashboard</span>
                         </a>
                     </li>
-                    <li class=" nav__list-item">
+                    <li class=" nav__list-item" *ngIf="userRole == 'USER'">
                         <a routerLink="/main-form">
                             <i class="@parent.CssClass"></i>
                             <span class="nav__list-text">Add New Post</span>
                         </a>
                     </li>
-                    <li class=" nav__list-item">
+                    <li class=" nav__list-item" *ngIf="userRole == 'USER'">
                         <a routerLink="/mypost">
                             <i class="@parent.CssClass"></i>
                             <span class="nav__list-text">My Post</span>
                         </a>
                     </li>
-                    
+                    <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
+                        <a routerLink="/allpost">
+                            <i class="@parent.CssClass"></i>
+                            <span class="nav__list-text">User Posts</span>
+                        </a>
+                    </li>
 
 
                     <li class="nav__list-item nav__list-item--logout">
-                        <a href="/account/logout" class="nav__list-link">
+                        <a (click)="onLogout()" class="nav__list-link">
                             <div class="nav__list-icon">
                                 <span class="material-icons-outlined">
 

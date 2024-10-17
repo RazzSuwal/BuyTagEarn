@@ -15,7 +15,7 @@ namespace SMM.Controllers
         }
         [HttpGet("GetUserPosts/{type}")]
         [Authorize]
-        public async Task<IActionResult> GetAllUserPosts(string type)
+        public async Task<IActionResult> GetAllUserPosts(string? type)
         {
             // Validate the Id input
             //if (string.IsNullOrEmpty(userId))
@@ -51,12 +51,9 @@ namespace SMM.Controllers
             try
             {
                 var postDetails = await _postService.AprovedUserPost(postId, IsApproved);
-                if (postDetails is string errorMessage)
-                {
-                    return NotFound(errorMessage);
-                }
 
-                return Ok(postDetails);
+
+                return Ok(new { message = "Approved Successfully" });
             }
             catch (Exception ex)
             {
