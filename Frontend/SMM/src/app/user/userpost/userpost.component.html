@@ -9,13 +9,13 @@
         <!-- <div class="card text-white border-0"> -->
         <div *ngFor="let post of userPosts">
 
-           
+
             <div class="card border-0 wtab" style="width: 103%;">
                 <!-- <div class="card-body three"><small >View</small>
-          
+
           <h5>Lorem ipsum dolor sit amet consectetur adipisi</h5> -->
                 <blockquote class="instagram-media mt-1"
-                    
+
                     data-instgrm-version="14"
                     style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); max-width:540px; min-width:312px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
                     <a href={{post.PostUrl}}
@@ -26,8 +26,8 @@
                 <div class="footer">
                     <div class="d-flex justify-content-between w-100">
                         <div>
-                            <a href={{post.PostUrl}}
-                                class="dateit"><i class="fa fa-calendar pr-1"></i> View Post in Instagram</a>
+                          <a [routerLink]="['/postDetails', post.UserPostId]"
+                                class="dateit"><i class="fa fa-calendar pr-1"></i> View Post Details</a>
 
                             <a class="locit"><i class="fa fa-twitter pr-1"></i> Nepal</a>
                         </div>
@@ -47,7 +47,7 @@
 
         <!-- <div class="card border-0">
         <div class="position-relative">
-  
+
         </div>
         <div class="card-body">
           <div class="mb-3"><a class="card-link text-primary read-more" href="javascript://">Read More</a></div>
@@ -65,10 +65,10 @@
           </div>
         </div>
       </div>
-  
+
 
       <div class="card bg-primary text-white text-center p-4 border-0 four">
-  
+
       </div> -->
 
         <!-- Card-->

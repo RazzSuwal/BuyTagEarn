@@ -1,11 +1,7 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SMM.DataAccessLayer.Services.IServices;
-using SMM.DataAccessLayer.Services.Services;
 using SMM.Models.DTO;
-using System.Security.Claims;
 
 namespace SMM.Controllers
 {
@@ -55,14 +51,39 @@ namespace SMM.Controllers
                 var postDetails = await _userService.GetUserPost(userId);
                 if (postDetails is string errorMessage)
                 {
-                    return NotFound(errorMessage); 
+                    return NotFound(errorMessage);
                 }
                 if (postDetails == null || !((IEnumerable<dynamic>)postDetails).Any())
                 {
                     return NotFound("No posts found for the given UserId");
                 }
 
-                return Ok(postDetails); 
+                return Ok(postDetails);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet("GetUserPostsDetails/{userPostId}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserPostsDetails(int? userPostId)
+        {
+
+            try
+            {
+                var postDetails = await _userService.GetUserPostsDetails(userPostId);
+                if (postDetails is string errorMessage)
+                {
+                    return NotFound(errorMessage);
+                }
+                if (postDetails == null || !((IEnumerable<dynamic>)postDetails).Any())
+                {
+                    return NotFound("No posts found for the given userPostId");
+                }
+
+                return Ok(postDetails);
             }
             catch (Exception ex)
             {

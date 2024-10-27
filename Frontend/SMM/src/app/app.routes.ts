@@ -8,6 +8,7 @@ import { authGuard } from './services/auth/auth.guard';
 import { MainFormComponent } from './user/main-form/main-form.component';
 import { UserpostComponent } from './user/userpost/userpost.component';
 import { AllpostComponent } from './admin/allpost/allpost.component';
+import { UserpostDetailsComponent } from './user/userpost-details/userpost-details.component';
 
 export const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -18,6 +19,6 @@ export const routes: Routes = [
     { path: 'main-form', component: MainFormComponent, canActivate: [authGuard] },
     { path: 'mypost', component: UserpostComponent, canActivate: [authGuard] },
     { path: 'allpost', component: AllpostComponent, canActivate: [authGuard] },
-    
-    
+    { path: 'postDetails/:id', component: UserpostDetailsComponent, canActivate: [authGuard] },
+
 ];

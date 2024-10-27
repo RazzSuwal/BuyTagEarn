@@ -90,5 +90,35 @@ namespace SMM.DataAccessLayer.Services.Services
             }
         }
 
+        public async Task<dynamic> GetUserPostsDetails(int? userPostId)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @"
+                SELECT * FROM [dbo].[UserPost] WHERE UserPostId = @UserPostId";
+
+                    var parameters = new
+                    {
+                        UserPostId = userPostId
+                    };
+
+                    // Fetch the result
+                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+                    if (result == null || !result.Any())
+                    {
+                        return "No records found for the given UserId";
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+
     }
 }

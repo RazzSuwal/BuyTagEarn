@@ -7,6 +7,7 @@ import { MainFormComponent } from './main-form/main-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserpostComponent } from './userpost/userpost.component';
+import { UserpostDetailsComponent } from './userpost-details/userpost-details.component';
 
 
 
@@ -15,7 +16,8 @@ import { UserpostComponent } from './userpost/userpost.component';
     DashboardComponent,
     ContactusComponent,
     MainFormComponent,
-    UserpostComponent
+    UserpostComponent,
+    UserpostDetailsComponent
   ],
   imports: [
     CommonModule,

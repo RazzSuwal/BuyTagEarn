@@ -76,12 +76,24 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+//builder.Services.AddCors(o =>
+//{
+//    o.AddPolicy("myCorsPolicy", policy =>
+//    {
+//        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+//        //policy.WithOrigins("http://localhost:52768").AllowAnyHeader().AllowAnyMethod();
+//    });
+//});
+
+//Accepted any port
+
 builder.Services.AddCors(o =>
 {
     o.AddPolicy("myCorsPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
-        //policy.WithOrigins("http://localhost:52768").AllowAnyHeader().AllowAnyMethod();
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 

@@ -6,6 +6,7 @@ namespace SMM.DataAccessLayer.Services.IServices
     {
         Task<string> UserPost(PostRequestDTO postRequestDTO);
         Task<dynamic> GetUserPost(string userId);
+        Task<dynamic> GetUserPostsDetails(int? userPostId);
 
     }
 }
