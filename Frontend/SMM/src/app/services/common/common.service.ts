@@ -23,7 +23,7 @@ export class CommonService {
     // });
     this._toastr.success(text, title, { timeOut: timeOut });
   }
-  
+
   showAlert(mes: string, type: number, timeOut: number = TOSTER_TIME_OUT) {
     if (type == 200 || type.toString() == "200") {
       this._toastr.success(mes == "" ? "Sucess.!" : mes, "Success", {
@@ -51,4 +51,13 @@ export class CommonService {
   ) {
     this._toastr.warning(message, title, { timeOut: timeOut });
   }
+
+  // openModal(id: string): void {
+  //   ($(`#${id}`) as JQuery<HTMLElement>).modal('show');
+  // }
+
+  // closeModal(id: string): void {
+  //   ($(`#${id}`) as JQuery<HTMLElement>).modal('hide');
+  // }
+
 }

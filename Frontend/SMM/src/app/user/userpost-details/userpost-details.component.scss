@@ -8,15 +8,20 @@
     #5d3be8,
     #1241eb
   );
-  height: 100%;
+  height: 80vh;
   margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  padding-top: 200px;
+}
+.mineLogo{
+  position: absolute;
+  top: -80px;
 }
 
-main{
-  max-width: 720px;
-  margin: 5% auto;
+.main{
+  max-width: 60%;
+  margin: 0 auto;
 }
 
 .card{

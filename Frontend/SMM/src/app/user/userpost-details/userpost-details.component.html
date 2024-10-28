@@ -1,6 +1,11 @@
 
 <div class="detailbody">
-  <main>
+  <div class="mineLogo">
+    <a routerLink="/">
+        <img src="assets/images/BTElogobg.png" alt="" />
+    </a>
+</div>
+  <div class="main">
     <div class="card">
       <div class="card__title">
         <div class="icon">
@@ -16,20 +21,21 @@
             <p class="price">Money You Earn: $210.00</p>
           </div>
           <div class="image">
-            <img src="https://instagram.fktm14-1.fna.fbcdn.net/v/t51.29350-15/415983404_3677906892478251_7796881742620169002_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=instagram.fktm14-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=yF4AejIoj8gQ7kNvgFJ1D1U&_nc_gid=c990891d4c1d4d439d2c4a354837fc2b&edm=ANTKIIoBAAAA&ccb=7-5&oh=00_AYDIHyIkKi9wiSSHNauE45ClazE0pvFKiqkiF7BF6u36xQ&oe=6723C4CD&_nc_sid=d885a2" alt="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsKcLtcDvagrqCxPXwH7LG9Nddg1K83l6tQ&s" alt="">
           </div>
         </div>
         <div class="half">
           <div class="description">
             <p>Product Type: {{postDetails.ProductType}}</p>
             <br>
-            <p>Posted On:  {{postDetails.PostedOn}}</p>
+            <p>Posted On:  {{ formatDate(postDetails.PostedOn) }}</p>
             <br>
             <p>Total Number Of Likes:  {{postLikes}} </p>
             <br>
             <p>Total Number Of Likes:  {{postLikes}} </p>
           </div>
-          <span class="stock"><i class="fa fa-pen"></i> Pending</span>
+          <span *ngIf="!showAskPayment" class="stock"><i class="fa-solid fa-hourglass-half"></i> Pending</span>
+          <span *ngIf="showAskPayment" class="stock"><i class="fa-regular fa-clock"></i> Completed</span>
           <div class="reviews">
             <ul class="stars">
               <li><i class="fa fa-star"></i></li>
@@ -48,9 +54,10 @@
           <h3>BuyTagEarn</h3>
         </div>
         <div class="action">
-          <button type="button">Redemed Cash By Kahti</button>
+          <button *ngIf="showAskPayment" type="button" id="btnPayment">Request Payment</button>
+          <p *ngIf="!showAskPayment" >Pending</p>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </div>
