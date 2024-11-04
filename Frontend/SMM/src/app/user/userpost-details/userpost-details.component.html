@@ -2,7 +2,7 @@
 <div class="detailbody">
   <div class="mineLogo">
     <a routerLink="/">
-        <img src="assets/images/BTElogobg.png" alt="" />
+        <img src="assets/images/BTElogobg.png" alt="" height=""/>
     </a>
 </div>
   <div class="main">
@@ -54,10 +54,38 @@
           <h3>BuyTagEarn</h3>
         </div>
         <div class="action">
-          <button *ngIf="showAskPayment" type="button" id="btnPayment">Request Payment</button>
+          <button *ngIf="showAskPayment"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Request Payment</button>
           <p *ngIf="!showAskPayment" >Pending</p>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Request For Payment</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+          <div class="mb-3">
+            <label class="form-label">Mobile Number</label>
+            <input type="text" class="form-control">
+            <div class="form-text">Enter your mobile number that have register with khalti.</div>
+          </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
 </div>

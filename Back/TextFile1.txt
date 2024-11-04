@@ -18,4 +18,13 @@ CREATE TABLE [dbo].[UserPost](
 
 
 
-
+--Payment Table
+CREATE TABLE [dbo].[PaymentRequest](
+	[RequestId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [varchar](255) NULL,
+	[PaidByUserId] [varchar](255) NULL,
+	[UserPostId] [int] NULL,
+	[MobileNo] [varchar](50) NULL,
+	[IsPaid] [bit] NULL,
+	[RequestedDate] [datetime] NULL
+	)
