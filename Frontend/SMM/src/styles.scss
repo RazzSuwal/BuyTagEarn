@@ -1,2 +1,22 @@
 
 @import "../node_modules/ngx-toastr/toastr";
+
+.adjectmargin{
+  margin-top: 10%;
+  margin-left: 20%;
+  padding: 20px;
+}
+tr{
+  border: 1px solid #beabab;
+}
+td{
+  border-right: 1px solid #beabab;
+}
+thead{
+  background-color: #ccc9d8;
+  text-decoration-color: white;
+
+}
+thead tr th{
+  color: rgb(68, 66, 66);
+}

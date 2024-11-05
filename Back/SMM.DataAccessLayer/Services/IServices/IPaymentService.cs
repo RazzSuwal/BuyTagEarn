@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SMM.Models.DTO;
 
 namespace SMM.DataAccessLayer.Services.IServices
 {
     public interface IPaymentService
     {
+        Task<string> PaymentRequest(PaymentDTO paymentRequestDTO);
+        Task<dynamic> GetAllPaymentRequest();
+        Task<dynamic> PaymentById(int requestId);
     }
 }

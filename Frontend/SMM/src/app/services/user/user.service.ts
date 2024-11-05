@@ -23,9 +23,11 @@ export class UserService {
   getEmbedLikesAndUrl(postUrl: string): Observable<any> {
     // Encode the URL to handle special characters
     const encodedUrl = encodeURIComponent(postUrl);
-    return this.http.get(`https://localhost:7129/WeatherForecast/ScrapeLikese/${encodedUrl}`, {
+    return this.http.get(
+      `https://localhost:7129/WeatherForecast/ScrapeLikese/${encodedUrl}`,
+      {
         responseType: 'json',
-    });
-}
-
+      }
+    );
+  }
 }

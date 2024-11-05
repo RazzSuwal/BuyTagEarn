@@ -21,12 +21,12 @@
                     </a>
                     <!-- <ul class="dropdown-menu">
                     <li>
-                        
+
                         <a class="dropdown-item" href="/admin/appuser/changepassword/@User.Identity.GetAppUserUserId()">
                             <i class="material-icons">vertical_split</i> Change Password
                         </a>
                     </li>
-                   
+
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -85,6 +85,12 @@
                         </a>
                     </li>
 
+                    <li class=" nav__list-item" *ngIf="userRole == 'BRAND'">
+                      <a routerLink="/userPaymentRequest">
+                          <i class="@parent.CssClass"></i>
+                          <span class="nav__list-text">Payment Request</span>
+                      </a>
+                  </li>
 
                     <li class="nav__list-item nav__list-item--logout">
                         <a (click)="onLogout()" class="nav__list-link">

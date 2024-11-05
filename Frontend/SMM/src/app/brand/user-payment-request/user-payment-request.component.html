@@ -1,0 +1,36 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="adjectmargin">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+          <tr>
+              <th>SN</th>
+              <th>Product Name</th>
+              <th>Product Type</th>
+              <th>Khalti MobileNo</th>
+              <th>Request By</th>
+              <th>Request On</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let data of requestData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{data.ProductName}}</td>
+              <td>{{data.ProductType}}</td>
+              <td>{{data.MobileNo}}</td>
+              <td>{{data.Name}}</td>
+              <td>{{data.RequestedDate}}</td>
+              <td>
+                <button *ngIf="data.IsPaid == 0" class="btn btn-primary" >Pay</button>
+                <a class="btn btn-primary" href="{{data.PostUrl}}" target="_blank">View Post</a>
+                <button *ngIf="data.IsPaid == 1" class="btn btn-secondary"> Paid</button>
+            </td>
+
+
+          </tr>
+      </tbody>
+
+  </table>
+</div>
+
+

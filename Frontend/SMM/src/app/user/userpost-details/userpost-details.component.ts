@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { CommonService } from '../../services/common/common.service';
+import { PaymentService } from '../../services/payment/payment.service';
 
 @Component({
   selector: 'app-userpost-details',
@@ -13,10 +16,21 @@ export class UserpostDetailsComponent {
   postLikes: any;
   postImgUrl: any;
   showAskPayment: any;
+  paymentRequestForm: UntypedFormGroup;
+  submitted: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    private _userservice: UserService
-  ) {}
+    private fb: FormBuilder,
+    private _userservice: UserService,
+    private _commonservice: CommonService,
+    private _payment: PaymentService,
+    private router: Router,
+  ) {
+    this.paymentRequestForm = fb.group({
+      mobileNo: fb.control('', [Validators.required]),
+      userPostId: fb.control(null),
+    });
+  }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.postId = +params['id'];
@@ -28,8 +42,8 @@ export class UserpostDetailsComponent {
     this._userservice.getUserPostsDetails(this.postId).subscribe(
       (res: any) => {
         this.postDetails = res[0];
-        this.getEmbedLikesAndUrl(res[0].PostUrl)
-        this.PaymentFunction(res[0].PostedOn)
+        this.getEmbedLikesAndUrl(res[0].PostUrl);
+        this.PaymentFunction(res[0].PostedOn);
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -43,7 +57,6 @@ export class UserpostDetailsComponent {
         console.log(res);
         this.postLikes = res.likes;
         this.postImgUrl = res.imageUrl;
-
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -72,13 +85,13 @@ export class UserpostDetailsComponent {
   }
 
   PaymentFunction(postedDate: string) {
-    debugger
+    debugger;
     const currentDate = new Date(this.getCurrentDate());
     const postedDates = new Date(this.getNextTwoMonths(postedDate));
 
-    if (postedDates > currentDate) {
+    if (postedDates < currentDate) {
       this.showAskPayment = true;
-    }else{
+    } else {
       this.showAskPayment = false;
     }
   }
@@ -98,4 +111,28 @@ export class UserpostDetailsComponent {
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   }
 
+  submit() {
+    this.submitted = true;
+    if (this.paymentRequestForm.invalid) {
+      this._commonservice.warning('Error', 'Please fill up required fields!');
+      return;
+    }
+    let data = {
+      mobileNo: this.paymentRequestForm.get('mobileNo')?.value,
+      userPostId: this.postDetails.UserPostId,
+    };
+    this._payment.paymentRequest(data).subscribe({
+      next: (res) => {
+        this._commonservice.successAlert("Success", "Submit SuccessFul!");
+        this.paymentRequestForm.reset();
+        //need to work on
+        // $('#exampleModal').modal('hide');
+
+      },
+    });
+  }
+
+  get f() {
+    return this.paymentRequestForm.controls;
+  }
 }

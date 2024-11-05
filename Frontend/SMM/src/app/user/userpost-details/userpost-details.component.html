@@ -1,10 +1,9 @@
-
 <div class="detailbody">
   <div class="mineLogo">
     <a routerLink="/">
-        <img src="assets/images/BTElogobg.png" alt="" height=""/>
+      <img src="assets/images/BTElogobg.png" alt="" height="" />
     </a>
-</div>
+  </div>
   <div class="main">
     <div class="card">
       <div class="card__title">
@@ -21,18 +20,19 @@
             <p class="price">Money You Earn: $210.00</p>
           </div>
           <div class="image">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsKcLtcDvagrqCxPXwH7LG9Nddg1K83l6tQ&s" alt="">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfsKcLtcDvagrqCxPXwH7LG9Nddg1K83l6tQ&s"
+              alt="">
           </div>
         </div>
         <div class="half">
           <div class="description">
             <p>Product Type: {{postDetails.ProductType}}</p>
             <br>
-            <p>Posted On:  {{ formatDate(postDetails.PostedOn) }}</p>
+            <p>Posted On: {{ formatDate(postDetails.PostedOn) }}</p>
             <br>
-            <p>Total Number Of Likes:  {{postLikes}} </p>
+            <p>Total Number Of Likes: {{postLikes}} </p>
             <br>
-            <p>Total Number Of Likes:  {{postLikes}} </p>
+            <p>Total Number Of Likes: {{postLikes}} </p>
           </div>
           <span *ngIf="!showAskPayment" class="stock"><i class="fa-solid fa-hourglass-half"></i> Pending</span>
           <span *ngIf="showAskPayment" class="stock"><i class="fa-regular fa-clock"></i> Completed</span>
@@ -54,8 +54,9 @@
           <h3>BuyTagEarn</h3>
         </div>
         <div class="action">
-          <button *ngIf="showAskPayment"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Request Payment</button>
-          <p *ngIf="!showAskPayment" >Pending</p>
+          <button *ngIf="showAskPayment" type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Request Payment</button>
+          <p *ngIf="!showAskPayment">Pending</p>
         </div>
       </div>
     </div>
@@ -65,27 +66,40 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <form>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Request For Payment</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        
+  <form (ngSubmit)="submit()" [formGroup]="paymentRequestForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Request For Payment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
           <div class="mb-3">
-            <label class="form-label">Mobile Number</label>
-            <input type="text" class="form-control">
+
+            <div class="form-group" [ngClass]="{ error: submitted && f['mobileNo'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Mobile Number</label>
+                <input type="text" formControlName="mobileNo" placeholder="Mobile No" autocomplete="off"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['mobileNo'].errors" class="form-text">
+                <div *ngIf="f['mobileNo'].errors['required']">
+                  <span class="text-danger">Mobile Number is required</span>
+                </div>
+              </div>
+            </div>
+            <!-- <label class="form-label">Mobile Number</label>
+            <input type="text" class="form-control"> -->
             <div class="form-text">Enter your mobile number that have register with khalti.</div>
           </div>
-       
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
 </div>

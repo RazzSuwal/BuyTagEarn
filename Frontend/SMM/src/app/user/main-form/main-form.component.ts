@@ -122,10 +122,10 @@ export class MainFormComponent implements AfterViewInit {
       target_fs.classList.remove('hidden');
       target_fs.classList.add('visible');
     }
- 
+
     this.animating = false;
  }
- 
+
  submit() {
   let data = {
       brandName: this.postForm.get('brandName')?.value,

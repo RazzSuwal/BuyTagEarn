@@ -8,6 +8,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
 import { DataTablesModule } from 'angular-datatables';
+import { BrandModule } from './brand/brand.module';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { DataTablesModule } from 'angular-datatables';
     HttpClientModule,
     ReactiveFormsModule,
     AdminModule,
+    BrandModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
