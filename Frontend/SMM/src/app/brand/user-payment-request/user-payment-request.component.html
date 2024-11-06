@@ -13,6 +13,9 @@
           </tr>
       </thead>
       <tbody>
+        <tr *ngIf="requestData.length === 0">
+          <td colspan="7" class="text-center">No data available</td>
+        </tr>
           <tr *ngFor="let data of requestData; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{data.ProductName}}</td>

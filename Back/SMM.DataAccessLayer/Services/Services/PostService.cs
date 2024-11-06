@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SMM.DataAccessLayer.Services.IServices;
+using SMM.Models.DTO;
 using System.Data;
 
 namespace SMM.DataAccessLayer.Services.Services
@@ -82,6 +83,95 @@ namespace SMM.DataAccessLayer.Services.Services
                 return new { Error = ex.Message, StackTrace = ex.StackTrace };
             }
         }
+
+        #region Product CURD
+        public async Task<string> CreateUpdateProduct(ProductDTO productDTO)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    if (productDTO.ProductId == null)
+                    {
+                        string query = @"
+                        INSERT INTO [dbo].[Product] ([UserId], [ProductName], [ProductType], [CreatedDate], [IsApproved])
+                        VALUES (@UserId,@ProductName,@ProductType, GETDATE(),0)";
+
+                        var parameters = new
+                        {
+                            UserId = productDTO.UserId,
+                            ProductName = productDTO.ProductName,
+                            ProductType = productDTO.ProductType,
+
+                        };
+
+                        int rowsAffected = await dbConnection.ExecuteAsync(query, parameters);
+
+                        if (rowsAffected > 0)
+                        {
+                            return "Insert successfully!";
+                        }
+                        return "Error Encountered";
+                    }
+                    else
+                    {
+                        string query = @"
+                        UPDATE [dbo].[Product]
+                        SET 
+                            [ProductName] = @ProductName,
+                            [ProductType] = @ProductType
+                        WHERE [ProductId] = @ProductId";
+
+                        var parameters = new
+                        {
+                            ProductName = productDTO.ProductName,
+                            ProductType = productDTO.ProductType,
+                            ProductId = productDTO.ProductId
+                        };
+
+                        int rowsAffected = await dbConnection.ExecuteAsync(query, parameters);
+
+                        if (rowsAffected > 0)
+                        {
+                            return "Update successfully!";
+                        }
+                        return "Error Encountered";
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+        }
+        public async Task<dynamic> GetAllProductById(string? UserId)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @"Select * From [dbo].[Product] Where UserId = @UserId";
+                    var parameters = new { UserId = UserId };
+
+                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+                    if (result == null || !result.Any())
+                    {
+                        return new { data = new List<dynamic>() };
+                    }
+
+                    return new { data = result };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+
+        #endregion
 
 
     }

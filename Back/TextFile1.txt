@@ -28,3 +28,14 @@ CREATE TABLE [dbo].[PaymentRequest](
 	[IsPaid] [bit] NULL,
 	[RequestedDate] [datetime] NULL
 	)
+
+
+--Product Table
+CREATE TABLE [dbo].[Product](
+	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [varchar](255) NULL,
+	[ProductName] [varchar](255) NULL,
+	[ProductType] [varchar](255) NULL,
+	[CreatedDate] [datetime] NULL,
+	[IsApproved] [bit] NULL
+)
