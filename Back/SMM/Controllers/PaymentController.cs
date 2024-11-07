@@ -77,5 +77,41 @@ namespace SMM.Controllers
                 return StatusCode(500, new { Error = ex.Message });
             }
         }
+
+        [HttpPut("UploadVoucher")]
+        public async Task<IActionResult> UploadVoucher(int requestId, [FromForm] IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            try
+            {
+                string uploadsFolder = Path.Combine("Uploads", "PaymentVouchers");
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                string uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+                string fullPath = Path.Combine(filePath, uniqueFileName);
+                string imageUrl = $"/{uploadsFolder}/{uniqueFileName}";
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                var result = await _paymentService.UpdatePaymentRequestImageUrl(requestId, imageUrl);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = ex.Message, StackTrace = ex.StackTrace });
+            }
+        }
     }
 }

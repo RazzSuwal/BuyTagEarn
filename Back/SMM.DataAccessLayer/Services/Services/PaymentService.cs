@@ -118,5 +118,40 @@ namespace SMM.DataAccessLayer.Services.Services
             }
         }
 
+        public async Task<dynamic> UpdatePaymentRequestImageUrl(int requestId, string imageUrl)
+        {
+            try
+            {
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @"UPDATE [dbo].[PaymentRequest] 
+                                 SET VoucherImageUrl = @ImageUrl,
+                                 IsPaid = 1
+                                 WHERE RequestId = @RequestId";
+
+                    var parameters = new
+                    {
+                        RequestId = requestId,
+                        ImageUrl = imageUrl
+                    };
+
+                    var result = await dbConnection.ExecuteAsync(query, parameters);
+
+                    if (result > 0)
+                    {
+                        return "Image updated successfully";
+                    }
+                    else
+                    {
+                        return "No record found with the specified RequestId";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
     }
+
 }

@@ -89,7 +89,7 @@ export class UserpostDetailsComponent {
     const currentDate = new Date(this.getCurrentDate());
     const postedDates = new Date(this.getNextTwoMonths(postedDate));
 
-    if (postedDates < currentDate) {
+    if (postedDates > currentDate) {
       this.showAskPayment = true;
     } else {
       this.showAskPayment = false;

@@ -29,6 +29,10 @@ CREATE TABLE [dbo].[PaymentRequest](
 	[RequestedDate] [datetime] NULL
 	)
 
+--Add Coloumn 
+ ALTER TABLE [dbo].[PaymentRequest]
+ADD [VoucherImageUrl] NVARCHAR(255) NULL;
+
 
 --Product Table
 CREATE TABLE [dbo].[Product](

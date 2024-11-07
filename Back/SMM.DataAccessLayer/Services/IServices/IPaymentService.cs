@@ -7,5 +7,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<string> PaymentRequest(PaymentDTO paymentRequestDTO);
         Task<dynamic> GetAllPaymentRequest();
         Task<dynamic> PaymentById(int requestId);
+        Task<dynamic> UpdatePaymentRequestImageUrl(int requestId, string imageUrl);
     }
 }

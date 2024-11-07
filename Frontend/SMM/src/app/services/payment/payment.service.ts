@@ -18,4 +18,13 @@ export class PaymentService {
   getAllPaymentRequest(): Observable<any> {
     return this.http.get(this.baseUrl + 'GetAllPaymentRequest' );
   }
+
+  uploadPaymentVoucher(requestId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const url = `${this.baseUrl}UploadVoucher?requestId=${requestId}`;
+
+    return this.http.put(url, formData);
+  }
 }

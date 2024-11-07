@@ -1,39 +1,83 @@
 <app-adminnavbar></app-adminnavbar>
 <div class="adjectmargin">
   <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-      <thead>
-          <tr>
-              <th>SN</th>
-              <th>Product Name</th>
-              <th>Product Type</th>
-              <th>Khalti MobileNo</th>
-              <th>Request By</th>
-              <th>Request On</th>
-              <th>Action</th>
-          </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="requestData.length === 0">
-          <td colspan="7" class="text-center">No data available</td>
-        </tr>
-          <tr *ngFor="let data of requestData; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{data.ProductName}}</td>
-              <td>{{data.ProductType}}</td>
-              <td>{{data.MobileNo}}</td>
-              <td>{{data.Name}}</td>
-              <td>{{data.RequestedDate}}</td>
-              <td>
-                <button *ngIf="data.IsPaid == 0" class="btn btn-primary" >Pay</button>
-                <a class="btn btn-primary" href="{{data.PostUrl}}" target="_blank">View Post</a>
-                <button *ngIf="data.IsPaid == 1" class="btn btn-secondary"> Paid</button>
-            </td>
+    <thead>
+      <tr>
+        <th>SN</th>
+        <th>Product Name</th>
+        <th>Product Type</th>
+        <th>Khalti MobileNo</th>
+        <th>Request By</th>
+        <th>Request On</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="requestData.length === 0">
+        <td colspan="7" class="text-center">No data available</td>
+      </tr>
+      <tr *ngFor="let data of requestData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{data.ProductName}}</td>
+        <td>{{data.ProductType}}</td>
+        <td>{{data.MobileNo}}</td>
+        <td>{{data.Name}}</td>
+        <td>{{data.RequestedDate}}</td>
+        <td *ngIf="data.IsPaid == 1">Verifying...</td>
+        <td *ngIf="data.IsPaid == 0">Not Paid</td>
+        <td>
+          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#voucherModal" *ngIf="data.IsPaid == 0"
+            class="btn btn-primary" title="Pay With Khalti" onclick="window.open('https://khalti.com/', '_blank');">
+            <i class="fa-solid fa-money-check"></i>
+          </a>
+          <a class="btn btn-primary ms-2" title="View Post" href="{{data.PostUrl}}" target="_blank"><i
+              class="fa-solid fa-eye"></i></a>
+        </td>
 
 
-          </tr>
-      </tbody>
+      </tr>
+    </tbody>
 
   </table>
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true">
+  <form (ngSubmit)="submit()" [formGroup]="ssForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Request For Payment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+
+            <div class="form-group" [ngClass]="{ error: submitted && f['paymentss'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Payment Voucher</label>
+                <input type="file" formControlName="paymentss" placeholder="Payment Voucher" autocomplete="off" (change)="onFileSelected($event)"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['paymentss'].errors" class="form-text">
+                <div *ngIf="f['paymentss'].errors['required']">
+                  <span class="text-danger">Payment Screen Short is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-text">Payment voucher must be upload; otherwise, the payment will not be considered
+              complete.</div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
