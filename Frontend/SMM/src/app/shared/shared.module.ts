@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminnavbarComponent } from './adminnavbar/adminnavbar.component';
 import { DataTablesModule } from 'angular-datatables';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -17,8 +18,9 @@ import { DataTablesModule } from 'angular-datatables';
   imports: [
     CommonModule,
     RouterModule,
-    DataTablesModule
+    DataTablesModule,
+    NgSelectModule
   ],
-  exports: [NavbarComponent, AdminnavbarComponent] 
+  exports: [NavbarComponent, AdminnavbarComponent]
 })
 export class SharedModule { }

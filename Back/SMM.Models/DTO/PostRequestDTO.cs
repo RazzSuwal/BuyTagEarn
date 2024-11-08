@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace SMM.Models.DTO
 {
@@ -10,12 +6,15 @@ namespace SMM.Models.DTO
     {
         //public int? UserPostId { get; set; }
         public string? UserId { get; set; }
-        public string? ProductName { get; set; }
+        public int? ProductName { get; set; }
         public string? PostUrl { get; set; }
-        public string? ProductType { get; set; }
         public string? BrandName { get; set; }
         public bool? IsTag { get; set; }
         public DateTime? PostedOn { get; set; }
         public bool? IsPaid { get; set; }
+        public string? ImageUrl { get; set; }
+        public IFormFile? file { get; set; }
+
+
     }
 }

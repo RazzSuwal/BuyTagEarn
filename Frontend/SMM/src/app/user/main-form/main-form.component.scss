@@ -49,7 +49,19 @@
     font-size: 13px;
 }
 
-#msform input:focus, #msform textarea:focus {
+.select {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  font-size: 13px;
+}
+
+#msform input:focus, #msform textarea:focus{
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -200,7 +212,7 @@
 
 /* Make the fieldset visible and positioned correctly */
 .visible {
-    display: block !important; 
+    display: block !important;
     opacity: 1 !important; /* Fully opaque */
     visibility: visible !important; /* Visible */
     position: relative !important; /* Ensure it is in the normal document flow */
@@ -214,4 +226,19 @@
 #msform .actionn {
     width: 100px;
     margin: 10px 0px;
+}
+
+
+::ng-deep .ng-select .ng-option {
+  font-size: 14px;
+  padding: 10px;
+}
+
+::ng-deep .ng-select .ng-option:hover {
+  background-color: #f0f0f0;
+}
+
+::ng-deep .ng-select .ng-option.selected {
+  background-color: #4120ec;
+  color: white;
 }

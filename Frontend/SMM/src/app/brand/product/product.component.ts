@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { CommonService } from '../../services/common/common.service';
 import { BrandService } from '../../services/brand/brand.service';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AuthserviceService } from '../../services/auth/authservice.service';
 
 @Component({
   selector: 'app-product',
@@ -19,11 +20,13 @@ export class ProductComponent {
   formtitle !:string;
   submitBtn !:string;
   selectedProduct: any;
+  userId: string | null = null;
 
   constructor(
     private _commonservice: CommonService,
     private _brandService: BrandService,
     private fb: FormBuilder,
+    private authService: AuthserviceService
   ) {
     this.productForm = fb.group({
       productName: fb.control('', [Validators.required]),
@@ -33,7 +36,7 @@ export class ProductComponent {
   }
 
   ngOnInit(): void {
-    this.getAllProductById();
+    this.getUserID();
     this.dtOptions = {
       pagingType: 'full',
       pageLength: 10,
@@ -53,9 +56,16 @@ export class ProductComponent {
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
+  getUserID(): void {
+    debugger
+    this.userId = this.authService.getUserID();
+    if (this.userId != null) {
+      this.getAllProductById(this.userId);
+    }
 
-  getAllProductById() {
-    this._brandService.getAllProductById().subscribe((res) => {
+  }
+  getAllProductById(userId: any) {
+    this._brandService.getAllProductById(userId).subscribe((res) => {
       this.requestData = res.data;
 
       this.dtTrigger.next(null);
@@ -82,7 +92,7 @@ export class ProductComponent {
         // $('#exampleModal').modal('hide');
       },
     });
-    this.getAllProductById();
+    this.getAllProductById(this.userId );
 
   }
 

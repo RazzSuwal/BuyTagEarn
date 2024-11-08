@@ -67,12 +67,14 @@ namespace SMM.DataAccessLayer.Services.Services
                                     p.IsPaid,
                                     p.RequestedDate,
 	                                u.Name,
-	                                up.ProductName,
-	                                up.ProductType,
+	                                up.ProductId,
+									pr.ProductName,
+									pr.ProductType,
 	                                up.PostUrl
                                 FROM [dbo].[PaymentRequest] AS p
                                 LEFT JOIN dbo.AspNetUsers AS u ON u.Id = p.UserId
-                                LEFT JOIN dbo.UserPost As up On up.UserPostId = p.UserPostId;";
+                                LEFT JOIN dbo.UserPost As up On up.UserPostId = p.UserPostId
+								Left Join dbo.Product as pr On pr.ProductId = up.ProductId;";
 
                     // Fetch the result
                     var result = await dbConnection.QueryAsync<dynamic>(query);

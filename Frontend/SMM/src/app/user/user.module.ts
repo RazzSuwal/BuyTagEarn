@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserpostComponent } from './userpost/userpost.component';
 import { UserpostDetailsComponent } from './userpost-details/userpost-details.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -23,7 +24,8 @@ import { UserpostDetailsComponent } from './userpost-details/userpost-details.co
     CommonModule,
     RouterModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   exports: [
     DashboardComponent  // Export the DashboardComponent

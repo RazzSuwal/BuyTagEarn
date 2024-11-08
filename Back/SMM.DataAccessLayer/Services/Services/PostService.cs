@@ -173,6 +173,34 @@ namespace SMM.DataAccessLayer.Services.Services
 
         #endregion
 
+        public async Task<dynamic> GetAllBrand()
+        {
+            try
+            {
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @"SELECT 
+                                      u.[UserName],
+                                      u.Id,
+	                                  r.Name
+                                  FROM [dbo].[AspNetUsers] as u
+                                  Left Join [dbo].[AspNetUserRoles] as ar on ar.UserId = u.Id
+                                  left join [dbo].[AspNetRoles] as r on ar.RoleId = r.Id
+                                  Where r.Name = 'BRAND'";
 
+                    var result = await dbConnection.QueryAsync<dynamic>(query);
+                    if (result == null || !result.Any())
+                    {
+                        return new { data = new List<dynamic>() };
+                    }
+
+                    return new { data = result };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
     }
 }

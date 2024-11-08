@@ -11,5 +11,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<string> CreateUpdateProduct(ProductDTO productDTO);
         Task<dynamic> GetAllProductById(string? UserId);
         #endregion
+        Task<dynamic> GetAllBrand();
     }
 }

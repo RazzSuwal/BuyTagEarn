@@ -23,14 +23,14 @@ namespace SMM.DataAccessLayer.Services.Services
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     string query = @"
-                        INSERT INTO [dbo].[UserPost] ([UserId], [ProductName], [PostUrl], [ProductType], [BrandName], [IsTag], [PostedOn], [IsPaid], [CreatedDate], [IsApproved])
-                        VALUES (@UserId,@ProductName,@PostUrl,@ProductType,@BrandName,@IsTag,@PostedOn,@IsPaid,@CreatedDate, 0)";
+                        INSERT INTO [dbo].[UserPost] ([UserId], [ProductId], [PostUrl], [BrandId], [IsTag], [PostedOn], [IsPaid], [IsApproved], [ImageUrl], [CreatedDate])
+                        VALUES (@UserId,@ProductName,@PostUrl,@BrandName,@IsTag,@PostedOn,@IsPaid,0,@ImageUrl,@CreatedDate)";
 
                     var parameters = new
                     {
                         ProductName = postRequestDTO.ProductName,
                         PostUrl = postRequestDTO.PostUrl,
-                        ProductType = postRequestDTO.ProductType,
+                        ImageUrl = postRequestDTO.ImageUrl,
                         BrandName = postRequestDTO.BrandName,
                         IsTag = postRequestDTO.IsTag,
                         PostedOn = postRequestDTO.PostedOn,

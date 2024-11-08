@@ -20,7 +20,7 @@ namespace SMM.Controllers
 
         [HttpPost("UserPosts")]
         [Authorize]
-        public async Task<IActionResult> UserPost([FromBody] PostRequestDTO model)
+        public async Task<IActionResult> UserPost([FromForm] PostRequestDTO model)
         {
             // Cast or ensure that GetLoggedInUserDetails returns a UserDTO
             var userDetails = _authService.GetLoggedInUserDetails(User) as UserDTO;
@@ -29,11 +29,38 @@ namespace SMM.Controllers
             {
                 return BadRequest("User is missing");
             }
-
             model.UserId = userDetails.ID;
+            if (model.file == null || model.file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+            try
+            {
+                string uploadsFolder = Path.Combine("Uploads", "PostImage");
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
 
-            var result = await _userService.UserPost(model);
-            return Ok(result);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                string uniqueFileName = $"{Guid.NewGuid()}_{model.file.FileName}";
+                string fullPath = Path.Combine(filePath, uniqueFileName);
+                string imageUrl = $"/{uploadsFolder}/{uniqueFileName}";
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await model.file.CopyToAsync(stream);
+                }
+                model.ImageUrl = imageUrl;
+
+                var result = await _userService.UserPost(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = ex.Message, StackTrace = ex.StackTrace });
+            }
         }
 
         [HttpGet("GetUserPosts/{userId}")]

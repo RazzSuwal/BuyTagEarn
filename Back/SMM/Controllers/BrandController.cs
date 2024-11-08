@@ -36,20 +36,12 @@ namespace SMM.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAllProductById")]
+        [HttpGet("GetAllProductById/{userId}")]
         [Authorize]
-        public async Task<IActionResult> GetAllProductById()
+        public async Task<IActionResult> GetAllProductById(string? userId)
         {
             try
             {
-                var userDetails = _authService.GetLoggedInUserDetails(User) as UserDTO;
-
-                if (userDetails == null || string.IsNullOrEmpty(userDetails.ID))
-                {
-                    return BadRequest("User is missing");
-                }
-
-                var userId = userDetails.ID;
                 var products = await _postService.GetAllProductById(userId);
                 if (products is string errorMessage)
                 {
@@ -62,6 +54,15 @@ namespace SMM.Controllers
             {
                 return StatusCode(500, new { Error = ex.Message });
             }
+        }
+
+
+        [HttpGet("GetAllBrand")]
+        [Authorize]
+        public async Task<IActionResult> GetAllBrand()
+        {
+            var roleName = await _postService.GetAllBrand();
+            return Ok(roleName);
         }
     }
 }

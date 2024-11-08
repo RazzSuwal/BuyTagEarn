@@ -43,3 +43,19 @@ CREATE TABLE [dbo].[Product](
 	[CreatedDate] [datetime] NULL,
 	[IsApproved] [bit] NULL
 )
+
+
+--Chnage Post Table 
+CREATE TABLE [dbo].[UserPost](
+	[UserPostId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [varchar](255) NULL,
+	[ProductId] [int] NULL,
+	[PostUrl] [varchar](max) NULL,
+	[BrandId] [varchar](255) NULL,
+	[IsTag] [bit] NULL,
+	[PostedOn] [datetime] NULL,
+	[IsPaid] [bit] NULL,
+	[IsApproved] [bit] NULL,
+	[ImageUrl] [nvarchar](MAX) NULL,
+	[CreatedDate] [datetime] NULL
+) 

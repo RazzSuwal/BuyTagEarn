@@ -30,4 +30,26 @@ export class UserService {
       }
     );
   }
+
+  // userPost(model: any, file: File): Observable<any> {
+  //   const formData = new FormData();
+
+  //   // Append the properties of the PostRequestDTO to the FormData
+  //   formData.append('UserId', model.UserId || '');
+  //   formData.append('ProductName', model.ProductName?.toString() || '');
+  //   formData.append('PostUrl', model.PostUrl || '');
+  //   formData.append('BrandName', model.BrandName || '');
+  //   formData.append('IsTag', model.IsTag?.toString() || '');
+  //   formData.append('PostedOn', model.PostedOn?.toString() || '');
+  //   formData.append('IsPaid', model.IsPaid?.toString() || '');
+
+  //   // Append the file
+  //   formData.append('file', file);
+
+  //   // Create the API URL
+  //   const url = `${this.baseUrl}UserPosts`; // Assuming this is the correct URL for your endpoint
+
+  //   // Make the HTTP POST request and return the observable
+  //   return this.http.post(url, formData);
+  // }
 }
