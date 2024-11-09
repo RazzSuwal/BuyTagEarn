@@ -14,6 +14,21 @@ export class UserService {
       responseType: 'text',
     });
   }
+
+  userPost2(model: any, file: File): Observable<any> {
+    debugger;
+    const formData = new FormData();
+    formData.append('BrandName', model.brandName || '');
+    formData.append('ProductName', model.productName || '');
+    formData.append('PostUrl', model.postUrl || '');
+    formData.append('PostedOn', model.postedOn || '');
+    formData.append('IsTag', model.isTag || '');
+    formData.append('file', file);
+
+    const url = `${this.baseUrl}UserPosts`;
+    return this.http.post(url, formData, { responseType: 'text' });
+  }
+
   getUserPost(userId: string): Observable<any> {
     return this.http.get(this.baseUrl + 'GetUserPosts/' + userId);
   }

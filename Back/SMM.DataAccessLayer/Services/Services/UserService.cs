@@ -97,21 +97,44 @@ namespace SMM.DataAccessLayer.Services.Services
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     string query = @"
-                SELECT * FROM [dbo].[UserPost] WHERE UserPostId = @UserPostId";
+                SELECT [UserPostId]
+                      ,[PostUrl]
+                      ,[IsTag]
+                      ,[PostedOn]
+                      ,[IsPaid]
+                      ,up.[IsApproved]
+                      ,up.[ImageUrl]
+                      ,up.[CreatedDate]
+                      ,p.ProductName
+                      ,p.ProductType
+                      ,u.Name as BrandName
+                  FROM [dbo].[UserPost] as up
+                  Left Join dbo.Product as p On p.ProductId = up.ProductId
+                  Left Join dbo.AspNetUsers as u On u.Id = up.BrandId
+                  Where up.UserPostId = @UserPostId";
 
-                    var parameters = new
-                    {
-                        UserPostId = userPostId
-                    };
+                    var parameters = new { UserPostId = userPostId };
 
-                    // Fetch the result
                     var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
                     if (result == null || !result.Any())
                     {
                         return "No records found for the given UserId";
                     }
 
-                    return result;
+                    // Get the image path from the result
+                    var postDetail = result.First();
+                    if (postDetail.ImageUrl != null)
+                    {
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), postDetail.ImageUrl.TrimStart('/'));
+
+                        if (File.Exists(filePath))
+                        {
+                            byte[] imageBytes = await File.ReadAllBytesAsync(filePath);
+                            postDetail.ImageBase64 = Convert.ToBase64String(imageBytes);
+                        }
+                    }
+
+                    return postDetail;
                 }
             }
             catch (Exception ex)

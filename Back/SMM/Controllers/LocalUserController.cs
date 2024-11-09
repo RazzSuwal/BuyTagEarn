@@ -55,7 +55,7 @@ namespace SMM.Controllers
                 model.ImageUrl = imageUrl;
 
                 var result = await _userService.UserPost(model);
-                return Ok(result);
+                return Ok(new { message = "Post successfully created!" });
             }
             catch (Exception ex)
             {
@@ -63,11 +63,40 @@ namespace SMM.Controllers
             }
         }
 
+        //[HttpGet("GetUserPosts/{userId}")]
+        //[Authorize]
+        //public async Task<IActionResult> GetUserPosts(string userId)
+        //{
+        //    // Validate the Id input
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        return BadRequest("UserId cannot be null or empty");
+        //    }
+
+        //    try
+        //    {
+        //        var postDetails = await _userService.GetUserPost(userId);
+        //        if (postDetails is string errorMessage)
+        //        {
+        //            return NotFound(errorMessage);
+        //        }
+        //        if (postDetails == null || !((IEnumerable<dynamic>)postDetails).Any())
+        //        {
+        //            return NotFound("No posts found for the given UserId");
+        //        }
+
+        //        return Ok(postDetails);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { Error = ex.Message });
+        //    }
+        //}
+
         [HttpGet("GetUserPosts/{userId}")]
         [Authorize]
         public async Task<IActionResult> GetUserPosts(string userId)
         {
-            // Validate the Id input
             if (string.IsNullOrEmpty(userId))
             {
                 return BadRequest("UserId cannot be null or empty");
@@ -76,13 +105,26 @@ namespace SMM.Controllers
             try
             {
                 var postDetails = await _userService.GetUserPost(userId);
+
                 if (postDetails is string errorMessage)
                 {
                     return NotFound(errorMessage);
                 }
+
                 if (postDetails == null || !((IEnumerable<dynamic>)postDetails).Any())
                 {
                     return NotFound("No posts found for the given UserId");
+                }
+
+                // Add image data to each post record
+                foreach (var post in postDetails)
+                {
+                    string imagePath = Path.Combine(Directory.GetCurrentDirectory(), post.ImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        byte[] imageBytes = await System.IO.File.ReadAllBytesAsync(imagePath);
+                        post.ImageData = Convert.ToBase64String(imageBytes);  // Add base64 image data to post
+                    }
                 }
 
                 return Ok(postDetails);
@@ -92,6 +134,7 @@ namespace SMM.Controllers
                 return StatusCode(500, new { Error = ex.Message });
             }
         }
+
 
         [HttpGet("GetUserPostsDetails/{userPostId}")]
         [Authorize]
@@ -105,7 +148,7 @@ namespace SMM.Controllers
                 {
                     return NotFound(errorMessage);
                 }
-                if (postDetails == null || !((IEnumerable<dynamic>)postDetails).Any())
+                if (postDetails == null)
                 {
                     return NotFound("No posts found for the given userPostId");
                 }

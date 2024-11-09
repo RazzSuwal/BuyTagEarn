@@ -153,23 +153,56 @@ export class MainFormComponent implements AfterViewInit {
     this.animating = false;
   }
 
+  // submit() {
+  //   let data = {
+  //     brandName: this.postForm.get('brandName')?.value,
+  //     productName: this.postForm.get('productName')?.value,
+  //     imageUrl: this.postForm.get('imageUrl')?.value,
+  //     postUrl: this.postForm.get('postUrl')?.value,
+  //     postedOn: this.postForm.get('postedOn')?.value,
+  //     isTag: this.postForm.get('isTag')?.value,
+  //   };
+  //   this.userService.userPost(data).subscribe({
+  //     next: (res) => {
+  //       // this.open(res, 'OK');
+  //       this.router.navigate(['/dashboard']);
+  //       this._commonservice.successAlert('Success', 'Submit SuccessFul!');
+  //     },
+  //   });
+  // }
+
   submit() {
-    let data = {
-      brandName: this.postForm.get('brandName')?.value,
-      productName: this.postForm.get('productName')?.value,
-      imageUrl: this.postForm.get('imageUrl')?.value,
-      postUrl: this.postForm.get('postUrl')?.value,
-      postedOn: this.postForm.get('postedOn')?.value,
-      isTag: this.postForm.get('isTag')?.value,
-    };
-    this.userService.userPost(data).subscribe({
-      next: (res) => {
-        // this.open(res, 'OK');
-        this.router.navigate(['/dashboard']);
+    // this.submitted = true;
+
+    if (this.postForm.invalid) {
+      this._commonservice.warning('Error', 'Please fill up required fields!');
+      return;
+    }
+
+    const formData = this.postForm.value;
+
+    const fileInput = (document.getElementById('file') as HTMLInputElement).files;
+
+    if (!fileInput || fileInput.length === 0) {
+      this._commonservice.warning('Error', 'Please upload the file!');
+      return;
+    }
+
+    const file = fileInput[0];
+
+    this.userService.userPost2(formData, file).subscribe(
+      (res: any) => {
+        this.postForm.reset();
         this._commonservice.successAlert('Success', 'Submit SuccessFul!');
+        this.router.navigate(['/dashboard']);
+        // this.submitted = false;
       },
-    });
-  }
+      (err: any) => {
+        this._commonservice.error(err);
+        // this.submitted = false;
+      }
+    );
+  }   
 
   getAllProductById(userId: any) {
     this._brandService.getAllProductById(userId).subscribe((res) => {

@@ -18,6 +18,7 @@ export class UserpostDetailsComponent {
   showAskPayment: any;
   paymentRequestForm: UntypedFormGroup;
   submitted: boolean = false;
+  imageSrc: any;
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -41,9 +42,12 @@ export class UserpostDetailsComponent {
   getUserPostDetails() {
     this._userservice.getUserPostsDetails(this.postId).subscribe(
       (res: any) => {
-        this.postDetails = res[0];
-        this.getEmbedLikesAndUrl(res[0].PostUrl);
-        this.PaymentFunction(res[0].PostedOn);
+        this.postDetails = res;
+        if (this.postDetails.ImageBase64) {
+          this.imageSrc = `data:image/jpeg;base64,${this.postDetails.ImageBase64}`;
+        }
+        this.getEmbedLikesAndUrl(res.PostUrl);
+        this.PaymentFunction(res.PostedOn);
       },
       (error: any) => {
         console.error('Error fetching data:', error);
