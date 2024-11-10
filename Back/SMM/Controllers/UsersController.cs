@@ -78,6 +78,13 @@ namespace SMM.Areas.Identity.Controllers
             var roleName = await _authService.GetUserRole(email);
             return Ok(roleName);
         }
+        //[HttpGet("GetAllBrand")]
+        //[Authorize]
+        //public async Task<IActionResult> GetAllBrand()
+        //{
+        //    var result = await _authService.GetAllBrandAsync();
+        //    return Ok(result);
+        //}
 
     }
 }

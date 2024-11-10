@@ -149,6 +149,31 @@ namespace SMM.DataAccessLayer.Services.Services
 
             return null;
         }
+        public async Task<IEnumerable<RegistrationRequestDTO>> GetAllBrandAsync()
+        {
+            var usersWithRoles = await _db.ApplicationUsers
+                                           .Join(_db.UserRoles,
+                                                 user => user.Id,
+                                                 userRole => userRole.UserId,
+                                                 (user, userRole) => new { user, userRole })
+                                           .Join(_db.Roles,
+                                                 userWithRole => userWithRole.userRole.RoleId,
+                                                 role => role.Id,
+                                                 (userWithRole, role) => new { userWithRole.user, role })
+                                           .Where(u => u.role.Name.ToLower() == "brand")
+                                           .ToListAsync();
+
+            var result = usersWithRoles.Select(u => new RegistrationRequestDTO
+            {
+                Name = u.user.UserName,
+                Email = u.user.Email,
+                PhoneNumber = u.user.PhoneNumber,
+                Role = u.role.Name,
+            }).ToList();
+
+            return result;
+        }
+
 
     }
 }

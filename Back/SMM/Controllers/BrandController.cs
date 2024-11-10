@@ -64,5 +64,22 @@ namespace SMM.Controllers
             var roleName = await _postService.GetAllBrand();
             return Ok(roleName);
         }
+
+        [HttpPut("AprovedBrandProduct/{productId}/{IsApproved}")]
+        [Authorize]
+        public async Task<IActionResult> AprovedBrandProduct(int productId, int IsApproved)
+        {
+            try
+            {
+                var productDetails = await _postService.AprovedBrandProduct(productId, IsApproved);
+
+
+                return Ok(new { message = "Approved Successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = ex.Message });
+            }
+        }
     }
 }

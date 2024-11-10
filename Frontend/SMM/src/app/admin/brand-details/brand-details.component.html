@@ -1,0 +1,116 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="adjectmargin">
+  <div class="action">
+    <button (click)="add()" type="button" class="btn btn-primary" data-bs-toggle="modal"
+      data-bs-target="#addBrand">Add New Brand<i class="fa fa-plus" aria-hidden="true"></i></button>
+  </div>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead>
+      <tr>
+        <th>SN</th>
+        <th>Brand Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="requestData.length === 0">
+        <td colspan="7" class="text-center">No data available</td>
+      </tr>
+      <tr *ngFor="let data of requestData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{data.UserName}}</td>
+        <td>{{data.Email}}</td>
+        <td>{{data.PhoneNumber}}</td>
+        <td>
+          <button class="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addBrand" tabindex="-1" aria-labelledby="addBrandLabel" aria-hidden="true">
+  <form (ngSubmit)="submit()" [formGroup]="brandForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{formtitle}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <div class="form-group" [ngClass]="{ error: submitted && f['name'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Brand Name</label>
+                <input type="text" formControlName="name" placeholder="Brand Name" autocomplete="off"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['name'].errors" class="form-text">
+                <div *ngIf="f['name'].errors['required']">
+                  <span class="text-danger">Brand Name is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-group" [ngClass]="{ error: submitted && f['email'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Email</label>
+                <input type="email" formControlName="email" placeholder="Email" autocomplete="off"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['email'].errors" class="form-text">
+                <div *ngIf="f['email'].errors['required']">
+                  <span class="text-danger">Brand Name is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-group" [ngClass]="{ error: submitted && f['phoneNumber'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Phone Number</label>
+                <input type="text" formControlName="phoneNumber" placeholder="Phone Number" autocomplete="off"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['phoneNumber'].errors" class="form-text">
+                <div *ngIf="f['phoneNumber'].errors['required']">
+                  <span class="text-danger">PhoneNumber is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-group" [ngClass]="{ error: submitted && f['password'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label">Password</label>
+                <input type="password" formControlName="password" placeholder="Password" autocomplete="off"
+                  class="form-control" />
+              </div>
+              <div *ngIf="submitted && f['password'].errors" class="form-text">
+                <div *ngIf="f['password'].errors['required']">
+                  <span class="text-danger">Password is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">{{submitBtn}}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

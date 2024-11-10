@@ -10,5 +10,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<bool> AssignRole(string email, string roleName);
         UserDTO GetLoggedInUserDetails(ClaimsPrincipal user);
         Task<string> GetUserRole(string email);
+        Task<IEnumerable<RegistrationRequestDTO>> GetAllBrandAsync();
     }
 }

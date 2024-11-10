@@ -1,0 +1,31 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="adjectmargin">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Brand Name</th>
+                <th>Created Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{product.ProductName}}</td>
+                <td>{{product.ProductType}}</td>
+                <td>{{product.Name}}</td>
+                <td>{{product.CreatedDate.split('T')[0]}}</td>
+                <td>
+                    <button *ngIf="product.IsApproved == 0" class="btn btn-primary" (click)="approved(product.ProductId, 1)">Approved</button>
+                    <button *ngIf="product.IsApproved == 1" class="btn btn-secondary" (click)="approved(product.ProductId, 0)"> Cancel</button>
+                </td>
+
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+

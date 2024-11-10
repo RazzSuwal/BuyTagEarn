@@ -26,12 +26,42 @@ namespace SMM.DataAccessLayer.Services.Services
                     string query = "";
                     if (type == "Approved")
                     {
-                        query = @"SELECT * FROM [dbo].[UserPost] WHERE IsApproved = 1";
+                        query = @"SELECT [UserPostId]
+                                  ,[PostUrl]
+                                  ,[IsTag]
+                                  ,[PostedOn]
+                                  ,[IsPaid]
+                                  ,up.[IsApproved]
+                                  ,up.[ImageUrl]
+                                  ,up.[CreatedDate]
+                                  ,p.ProductName
+                                  ,p.ProductType
+                                  ,u.Name as BrandName
+	                              ,u2.UserName
+                              FROM [dbo].[UserPost] as up
+                              Left Join dbo.Product as p On p.ProductId = up.ProductId
+                              Left Join dbo.AspNetUsers as u On u.Id = up.BrandId
+                              Left Join dbo.AspNetUsers as u2 On u2.Id = up.UserId WHERE IsApproved = 1";
                     }
                     else
                     {
                         //query = @"SELECT * FROM [dbo].[UserPost] WHERE IsApproved = 0";
-                        query = @"SELECT * FROM [dbo].[UserPost]";
+                        query = @"SELECT [UserPostId]
+                                  ,[PostUrl]
+                                  ,[IsTag]
+                                  ,[PostedOn]
+                                  ,[IsPaid]
+                                  ,up.[IsApproved]
+                                  ,up.[ImageUrl]
+                                  ,up.[CreatedDate]
+                                  ,p.ProductName
+                                  ,p.ProductType
+                                  ,u.Name as BrandName
+	                              ,u2.UserName
+                              FROM [dbo].[UserPost] as up
+                              Left Join dbo.Product as p On p.ProductId = up.ProductId
+                              Left Join dbo.AspNetUsers as u On u.Id = up.BrandId
+                              Left Join dbo.AspNetUsers as u2 On u2.Id = up.UserId";
                     }
 
                     // Fetch the result
@@ -153,10 +183,27 @@ namespace SMM.DataAccessLayer.Services.Services
             {
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    string query = @"Select * From [dbo].[Product] Where UserId = @UserId";
-                    var parameters = new { UserId = UserId };
+                    string query;
+                    IEnumerable<dynamic> result;
+                    if (UserId == "-1")
+                    {
+                        query = @"Select [ProductId]
+                                  ,[UserId]
+                                  ,[ProductName]
+                                  ,[ProductType]
+                                  ,[CreatedDate]
+                                  ,[IsApproved] 
+	                              ,u.Name From [dbo].[Product] as p
+                            Left Join dbo.AspNetUsers as u On u.Id = p.UserId";
+                        result = await dbConnection.QueryAsync<dynamic>(query);
+                    }
+                    else
+                    {
+                        query = @"Select * From [dbo].[Product] Where UserId = @UserId";
+                        var parameters = new { UserId = UserId };
+                        result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+                    }
 
-                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
                     if (result == null || !result.Any())
                     {
                         return new { data = new List<dynamic>() };
@@ -180,9 +227,11 @@ namespace SMM.DataAccessLayer.Services.Services
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     string query = @"SELECT 
-                                      u.[UserName],
+                                      u.[Name] as UserName,
                                       u.Id,
-	                                  r.Name
+	                                  r.Name,
+                                      u.PhoneNumber,
+                                      u.Email
                                   FROM [dbo].[AspNetUsers] as u
                                   Left Join [dbo].[AspNetUserRoles] as ar on ar.UserId = u.Id
                                   left join [dbo].[AspNetRoles] as r on ar.RoleId = r.Id
@@ -195,6 +244,40 @@ namespace SMM.DataAccessLayer.Services.Services
                     }
 
                     return new { data = result };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+
+        public async Task<dynamic> AprovedBrandProduct(int productId, int IsApproved)
+        {
+            try
+            {
+
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "";
+                    if (IsApproved == 1)
+                    {
+                        query = @"UPDATE [dbo].[Product] SET IsApproved = 1 WHERE ProductId = @ProductId";
+
+                    }
+                    else
+                    {
+                        query = @"UPDATE [dbo].[Product] SET IsApproved = 0 WHERE ProductId = @ProductId";
+                    }
+                    var parameters = new
+                    {
+                        ProductId = productId
+                    };
+
+                    // Fetch the result
+                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+
+                    return "Approved Sucessfully";
                 }
             }
             catch (Exception ex)

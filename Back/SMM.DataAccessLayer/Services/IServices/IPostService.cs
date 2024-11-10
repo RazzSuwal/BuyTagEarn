@@ -12,5 +12,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<dynamic> GetAllProductById(string? UserId);
         #endregion
         Task<dynamic> GetAllBrand();
+        Task<dynamic> AprovedBrandProduct(int productId, int IsApproved);
     }
 }

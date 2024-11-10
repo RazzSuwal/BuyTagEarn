@@ -23,4 +23,8 @@ export class BrandService {
   getAllBrand(): Observable<any> {
     return this.http.get(this.baseUrl + 'GetAllBrand');
   }
+
+  approved(productId: number, IsApproved: number): Observable<any> {
+    return this.http.put(this.baseUrl + 'AprovedBrandProduct/' + productId + '/' + IsApproved, {}, { responseType: 'text' });
+  }
 }

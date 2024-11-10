@@ -78,6 +78,22 @@
               <span class="nav__list-text ms-2">My Post</span>
             </a>
           </li>
+
+          <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
+            <a routerLink="/brand">
+              <i class="fa fa-plus-circle"></i>
+              <span class="nav__list-text ms-2">Add Brand</span>
+            </a>
+          </li>
+
+          <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
+            <a routerLink="/brandProduct">
+              <i class="fa-solid fa-store"></i>
+              <span class="nav__list-text ms-2">Products</span>
+            </a>
+          </li>
+
+
           <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
             <a routerLink="/allpost">
               <i class="fa-regular fa-address-card"></i>

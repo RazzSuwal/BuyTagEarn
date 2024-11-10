@@ -11,6 +11,8 @@ import { AllpostComponent } from './admin/allpost/allpost.component';
 import { UserpostDetailsComponent } from './user/userpost-details/userpost-details.component';
 import { UserPaymentRequestComponent } from './brand/user-payment-request/user-payment-request.component';
 import { ProductComponent } from './brand/product/product.component';
+import { BrandDetailsComponent } from './admin/brand-details/brand-details.component';
+import { BrandproductsComponent } from './admin/brandproducts/brandproducts.component';
 
 export const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -24,5 +26,7 @@ export const routes: Routes = [
     { path: 'postDetails/:id', component: UserpostDetailsComponent, canActivate: [authGuard] },
     { path: 'userPaymentRequest', component: UserPaymentRequestComponent, canActivate: [authGuard] },
     { path: 'product', component: ProductComponent, canActivate: [authGuard] },
+    { path: 'brand', component: BrandDetailsComponent, canActivate: [authGuard] },
+    { path: 'brandProduct', component: BrandproductsComponent, canActivate: [authGuard] },
 
 ];
