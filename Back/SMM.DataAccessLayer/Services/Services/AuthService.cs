@@ -149,6 +149,23 @@ namespace SMM.DataAccessLayer.Services.Services
 
             return null;
         }
+        public async Task<string> GetUserRoleById(string userId)
+        {
+            var user = await _db.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null)
+            {
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                if (userRoles.Any())
+                {
+                    return userRoles.First();
+                }
+            }
+
+            return null;
+        }
         public async Task<IEnumerable<RegistrationRequestDTO>> GetAllBrandAsync()
         {
             var usersWithRoles = await _db.ApplicationUsers

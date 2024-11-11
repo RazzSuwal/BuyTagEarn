@@ -24,24 +24,28 @@ namespace SMM.DataAccessLayer.Services.Services
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     string query = "";
-                    if (type == "Approved")
+                    var result = new List<dynamic>();
+                    if (type != null)
                     {
-                        query = @"SELECT [UserPostId]
-                                  ,[PostUrl]
-                                  ,[IsTag]
-                                  ,[PostedOn]
-                                  ,[IsPaid]
-                                  ,up.[IsApproved]
-                                  ,up.[ImageUrl]
-                                  ,up.[CreatedDate]
-                                  ,p.ProductName
-                                  ,p.ProductType
-                                  ,u.Name as BrandName
-	                              ,u2.UserName
-                              FROM [dbo].[UserPost] as up
-                              Left Join dbo.Product as p On p.ProductId = up.ProductId
-                              Left Join dbo.AspNetUsers as u On u.Id = up.BrandId
-                              Left Join dbo.AspNetUsers as u2 On u2.Id = up.UserId WHERE IsApproved = 1";
+                        query = @"
+                            SELECT [UserPostId]
+                                   ,[PostUrl]
+                                   ,[IsTag]
+                                   ,[PostedOn]
+                                   ,[IsPaid]
+                                   ,up.[IsApproved]
+                                   ,up.[ImageUrl]
+                                   ,up.[CreatedDate]
+                                   ,p.ProductName
+                                   ,p.ProductType
+                                   ,u.Name as BrandName
+                                   ,u2.UserName
+                            FROM [dbo].[UserPost] as up
+                            LEFT JOIN dbo.Product as p ON p.ProductId = up.ProductId
+                            LEFT JOIN dbo.AspNetUsers as u ON u.Id = up.BrandId
+                            LEFT JOIN dbo.AspNetUsers as u2 ON u2.Id = up.UserId
+                            WHERE u.Id = @Type";
+                        result = (await dbConnection.QueryAsync<dynamic>(query, new { Type = type })).ToList();
                     }
                     else
                     {
@@ -62,10 +66,10 @@ namespace SMM.DataAccessLayer.Services.Services
                               Left Join dbo.Product as p On p.ProductId = up.ProductId
                               Left Join dbo.AspNetUsers as u On u.Id = up.BrandId
                               Left Join dbo.AspNetUsers as u2 On u2.Id = up.UserId";
+                        result = (await dbConnection.QueryAsync<dynamic>(query)).ToList();
                     }
 
                     // Fetch the result
-                    var result = await dbConnection.QueryAsync<dynamic>(query);
                     if (result == null || !result.Any())
                     {
                         return "No records found for the given Type";

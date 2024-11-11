@@ -9,15 +9,15 @@ export class AdminService {
 
   baseUrl: string = 'https://localhost:7091/api/Admin/';
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
 
   }
-  getAllUserPost(): Observable<any> {
-    return this.http.get(this.baseUrl + 'GetUserPosts/' + null);
+  getAllUserPost(userId: string): Observable<any> {
+    return this.http.get(this.baseUrl + 'GetUserPosts/' + userId);
   }
   approved(postId: number, IsApproved: number): Observable<any> {
     return this.http.post(this.baseUrl + 'AprovedUserPost/' + postId + '/' + IsApproved, {}, { responseType: 'text' });
   }
-  
-  
+
+
 }

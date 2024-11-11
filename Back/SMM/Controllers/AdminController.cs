@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SMM.DataAccessLayer.Services.IServices;
+using SMM.Models.DTO;
 
 namespace SMM.Controllers
 {
@@ -9,13 +10,15 @@ namespace SMM.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IPostService _postService;
-        public AdminController(IPostService postService)
+        private readonly IAuthService _authService;
+        public AdminController(IPostService postService, IAuthService authService)
         {
             _postService = postService;
+            _authService = authService;
         }
-        [HttpGet("GetUserPosts/{type}")]
+        [HttpGet("GetUserPosts/{userId}")]
         [Authorize]
-        public async Task<IActionResult> GetAllUserPosts(string? type)
+        public async Task<IActionResult> GetAllUserPosts(string? userId)
         {
             // Validate the Id input
             //if (string.IsNullOrEmpty(userId))
@@ -25,7 +28,21 @@ namespace SMM.Controllers
 
             try
             {
-                var postDetails = await _postService.GetAllUserPost(type);
+
+                var userDetails = _authService.GetLoggedInUserDetails(User) as UserDTO;
+
+
+                if (userDetails == null || string.IsNullOrEmpty(userDetails.ID))
+                {
+                    return BadRequest("User is missing");
+                }
+                var role = await _authService.GetUserRoleById(userDetails.ID);
+                string id = userId;
+                if (role == "ADMIN")
+                {
+                    id = null;
+                }
+                var postDetails = await _postService.GetAllUserPost(id);
                 if (postDetails is string errorMessage)
                 {
                     return NotFound(errorMessage);

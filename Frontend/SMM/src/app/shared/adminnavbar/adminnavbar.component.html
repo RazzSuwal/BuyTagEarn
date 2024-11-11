@@ -94,7 +94,7 @@
           </li>
 
 
-          <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
+          <li class=" nav__list-item" *ngIf="userRole == 'ADMIN' || userRole == 'BRAND'">
             <a routerLink="/allpost">
               <i class="fa-regular fa-address-card"></i>
               <span class="nav__list-text ms-2">User Posts</span>
