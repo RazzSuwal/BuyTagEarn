@@ -59,3 +59,8 @@ CREATE TABLE [dbo].[UserPost](
 	[ImageUrl] [nvarchar](MAX) NULL,
 	[CreatedDate] [datetime] NULL
 ) 
+
+
+--Payment Table Add new coloumn 
+ ALTER TABLE [Pagination].[dbo].[PaymentRequest]
+ADD [Amount] varchar(255) NULL;

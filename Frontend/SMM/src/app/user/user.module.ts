@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserpostComponent } from './userpost/userpost.component';
 import { UserpostDetailsComponent } from './userpost-details/userpost-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { UserEarnComponent } from './user-earn/user-earn.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -18,14 +20,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ContactusComponent,
     MainFormComponent,
     UserpostComponent,
-    UserpostDetailsComponent
+    UserpostDetailsComponent,
+    UserEarnComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    DataTablesModule
   ],
   exports: [
     DashboardComponent  // Export the DashboardComponent

@@ -13,6 +13,7 @@ import { UserPaymentRequestComponent } from './brand/user-payment-request/user-p
 import { ProductComponent } from './brand/product/product.component';
 import { BrandDetailsComponent } from './admin/brand-details/brand-details.component';
 import { BrandproductsComponent } from './admin/brandproducts/brandproducts.component';
+import { UserEarnComponent } from './user/user-earn/user-earn.component';
 
 export const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -28,5 +29,6 @@ export const routes: Routes = [
     { path: 'product', component: ProductComponent, canActivate: [authGuard] },
     { path: 'brand', component: BrandDetailsComponent, canActivate: [authGuard] },
     { path: 'brandProduct', component: BrandproductsComponent, canActivate: [authGuard] },
+    { path: 'user-earn', component: UserEarnComponent, canActivate: [authGuard] },
 
 ];

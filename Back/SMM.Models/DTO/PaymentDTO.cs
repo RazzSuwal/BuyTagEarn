@@ -8,6 +8,7 @@
         public int? UserPostId { get; set; }
         public string? MobileNo { get; set; }
         public int? IsPaid { get; set; } = null!;
+        public string? Amount { get; set; }
 
     }
 }

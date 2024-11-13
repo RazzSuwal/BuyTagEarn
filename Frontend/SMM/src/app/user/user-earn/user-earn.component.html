@@ -1,0 +1,26 @@
+<app-adminnavbar></app-adminnavbar>
+<div class="adjectmargin">
+  <table #dataTable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" datatable class="row-border hover">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>BrandName</th>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Earn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of datas; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{data.BrandName}}</td>
+                <td>{{data.ProductName}}</td>
+                <td>{{data.ProductType}}</td>
+                <td>100 Rs</td>
+
+            </tr>
+        </tbody>
+
+    </table>
+</div>
+

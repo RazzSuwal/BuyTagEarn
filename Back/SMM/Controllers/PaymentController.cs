@@ -113,5 +113,37 @@ namespace SMM.Controllers
                 return StatusCode(500, new { Error = ex.Message, StackTrace = ex.StackTrace });
             }
         }
+
+        [HttpGet("GetAllPaidById")]
+        [Authorize]
+        public async Task<IActionResult> GetAllPaidById()
+        {
+
+            try
+            {
+                var userDetails = _authService.GetLoggedInUserDetails(User) as UserDTO;
+
+                if (userDetails == null || string.IsNullOrEmpty(userDetails.ID))
+                {
+                    return BadRequest("User is missing");
+                }
+
+                var data = await _paymentService.GetAllPaidById(userDetails.ID);
+                if (data is string errorMessage)
+                {
+                    return NotFound(errorMessage);
+                }
+                if (data == null || !((IEnumerable<dynamic>)data).Any())
+                {
+                    return NotFound("No data found !");
+                }
+
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Error = ex.Message });
+            }
+        }
     }
 }

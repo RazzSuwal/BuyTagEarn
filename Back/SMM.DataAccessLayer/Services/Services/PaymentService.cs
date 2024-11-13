@@ -23,8 +23,8 @@ namespace SMM.DataAccessLayer.Services.Services
                 using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     string query = @"
-                        INSERT INTO [dbo].[PaymentRequest] ([UserId], [PaidByUserId], [UserPostId], [MobileNo], [IsPaid], [RequestedDate])
-                        VALUES (@UserId,@PaidByUserId,@UserPostId,@MobileNo,0,@RequestedDate)";
+                        INSERT INTO [dbo].[PaymentRequest] ([UserId], [PaidByUserId], [UserPostId], [MobileNo], [IsPaid], [RequestedDate], [Amount])
+                        VALUES (@UserId,@PaidByUserId,@UserPostId,@MobileNo,0,@RequestedDate, @Amount)";
 
                     var parameters = new
                     {
@@ -32,7 +32,8 @@ namespace SMM.DataAccessLayer.Services.Services
                         UserPostId = paymentRequestDTO.UserPostId,
                         MobileNo = paymentRequestDTO.MobileNo,
                         UserId = paymentRequestDTO.UserId,
-                        RequestedDate = DateTime.Now
+                        RequestedDate = DateTime.Now,
+                        Amount = paymentRequestDTO.Amount
 
                     };
 
@@ -147,6 +148,39 @@ namespace SMM.DataAccessLayer.Services.Services
                     {
                         return "No record found with the specified RequestId";
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+
+        public async Task<dynamic> GetAllPaidById(string? userId)
+        {
+            try
+            {
+
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @" Select pd.ProductName, pd.ProductType, u.UserName as BrandName , pr.Amount
+                                      From [dbo].[PaymentRequest] as pr
+                                      Left Join dbo.UserPost as p On p.UserPostId = pr.UserPostId
+                                      Left Join dbo.Product as pd On pd.ProductId = p.ProductId
+                                      Left Join dbo.AspNetUsers as u On u.Id = pr.PaidByUserId
+                                     Where pr.IsPaid = 1 AND pr.UserId = '367e1912-a1cb-4099-935c-6c3e66052bd9'";
+
+                    var parameters = new
+                    {
+                        UserId = userId
+                    };
+                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+                    if (result == null || !result.Any())
+                    {
+                        return "No records found!";
+                    }
+
+                    return result;
                 }
             }
             catch (Exception ex)

@@ -27,4 +27,8 @@ export class PaymentService {
 
     return this.http.put(url, formData);
   }
+
+  getAllPaidById(): Observable<any> {
+    return this.http.get(this.baseUrl + 'GetAllPaidById' );
+  }
 }

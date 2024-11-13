@@ -19,6 +19,7 @@ export class UserpostDetailsComponent {
   paymentRequestForm: UntypedFormGroup;
   submitted: boolean = false;
   imageSrc: any;
+  amount: any;
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -30,6 +31,7 @@ export class UserpostDetailsComponent {
     this.paymentRequestForm = fb.group({
       mobileNo: fb.control('', [Validators.required]),
       userPostId: fb.control(null),
+      amount: fb.control(null),
     });
   }
   ngOnInit(): void {
@@ -61,6 +63,7 @@ export class UserpostDetailsComponent {
         console.log(res);
         this.postLikes = res.likes;
         this.postImgUrl = res.imageUrl;
+        this.amount = this.postLikes * 100
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -124,6 +127,7 @@ export class UserpostDetailsComponent {
     let data = {
       mobileNo: this.paymentRequestForm.get('mobileNo')?.value,
       userPostId: this.postDetails.UserPostId,
+      amount: this.amount,
     };
     this._payment.paymentRequest(data).subscribe({
       next: (res) => {

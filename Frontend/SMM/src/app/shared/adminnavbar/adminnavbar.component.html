@@ -78,6 +78,12 @@
               <span class="nav__list-text ms-2">My Post</span>
             </a>
           </li>
+          <li class=" nav__list-item" *ngIf="userRole == 'USER'">
+            <a routerLink="/user-earn">
+              <i class="fa-solid fa-money-bill-wave"></i>
+              <span class="nav__list-text ms-2">Payment History</span>
+            </a>
+          </li>
 
           <li class=" nav__list-item" *ngIf="userRole == 'ADMIN'">
             <a routerLink="/brand">
