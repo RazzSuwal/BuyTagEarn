@@ -21,20 +21,18 @@
                     <img *ngIf="post.ImageData" [src]="'data:image/jpeg;base64,' + post.ImageData" alt="User post image" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); max-width:540px; min-width:312px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"/>
                     <a href={{post.PostUrl}}
                         style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;"
-                        target="_blank">View this post on Instagram</a>
+                        target="_blank" class="ms-2">View this post on Instagram</a>
                 </div>
 
                 <div class="footer">
                     <div class="d-flex justify-content-between w-100">
                         <div>
                           <a [routerLink]="['/postDetails', post.UserPostId]"
-                                class="dateit"><i class="fa fa-calendar pr-1"></i> View Post Details</a>
+                                class="dateit"> <i class="fa-regular fa-eye pr-1 ms-2"></i> View Post Details</a>
 
-                            <a class="locit"><i class="fa fa-twitter pr-1"></i> Nepal</a>
+                            <!-- <a class="locit"><i class="fa fa-twitter pr-1"></i> Nepal</a> -->
                         </div>
-                        <a>
-                            <i class="fa fa-twitter pr-1"> </i>
-                        </a>
+                        
                     </div>
                 </div>
             </div>
@@ -93,16 +91,16 @@
     <div class="footer-social">
 
         <a class="footer-social-link" href="https://instgarm.com" target="__blank">
-            <i class="fa fa-instagram"></i>
+            <i class="fa-brands fa-instagram"></i>
         </a>
         <a class="footer-social-link" href="https://facebook.com" target="__blank">
-            <i class="fa fa-facebook"></i>
+            <i class="fa-brands fa-facebook"></i>
         </a>
         <a class="footer-social-link" href="https://www.linkedin.com" target="__blank">
-            <i class="fa fa-linkedin"></i>
+            <i class="fa-brands fa-linkedin"></i>
         </a>
         <a class="footer-social-link" href="https://www.youtube.com" target="__blank">
-            <i class="fa fa-youtube"></i>
+            <i class="fa-brands fa-youtube"></i>
         </a>
     </div>
 </footer>
