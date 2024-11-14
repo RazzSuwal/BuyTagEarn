@@ -191,6 +191,28 @@ namespace SMM.DataAccessLayer.Services.Services
             return result;
         }
 
+        //Chnage Password
+        public async Task<string> ChangePassword(string email, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return "User not found!";
+            }
+            var isValidOldPassword = await _userManager.CheckPasswordAsync(user, oldPassword);
+            if (!isValidOldPassword)
+            {
+                return "Old password is incorrect!";
+            }
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (result.Succeeded)
+            {
+                return "Password changed successfully!";
+            }
+            return result.Errors.FirstOrDefault()?.Description ?? "An error occurred while changing the password.";
+        }
+
+
 
     }
 }

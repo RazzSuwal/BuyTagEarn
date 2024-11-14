@@ -1,1 +1,22 @@
 @import url(../../../assets/panel.scss);
+
+
+.user-dropdown .btn-group {
+  position: relative;
+}
+
+.user-dropdown .dropdown-menu {
+  display: none;
+}
+
+.user-dropdown .dropdown-menu.show {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: -16px;
+  z-index: 1000;
+}
+
+.user-dropdown .dropdown-item {
+  cursor: pointer;
+}

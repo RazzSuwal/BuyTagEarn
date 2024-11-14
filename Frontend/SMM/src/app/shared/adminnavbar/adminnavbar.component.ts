@@ -10,6 +10,10 @@ import { CommonService } from '../../services/common/common.service';
 })
 export class AdminnavbarComponent implements OnInit{
   userRole: any;
+  userEmail!:any;
+  isDropdownOpen: boolean = false;
+  userName: string = '';
+  userAvatar: string = '/assets/images/UserProfileImage.jpg';
 
   constructor(public authService: AuthserviceService,
     private router: Router,
@@ -20,6 +24,7 @@ export class AdminnavbarComponent implements OnInit{
   }
   ngOnInit(): void {
     this.getUserRole();
+    this.getUserDetails();
   }
 
   getUserRole() {
@@ -34,4 +39,20 @@ export class AdminnavbarComponent implements OnInit{
     this.router.navigate(['/']);
     this._commonservice.successAlert("Success", "Logout Successful!");
   }
+
+  getUserDetails() {
+    const userDetails = this.authService.getUserDetails();
+    if (userDetails) {
+      this.userEmail = userDetails;
+      this.userName = userDetails ? userDetails.split('@')[0] : 'Guest';
+    } else {
+      this.userEmail = null;
+    }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+
 }

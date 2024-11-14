@@ -12,5 +12,6 @@ namespace SMM.DataAccessLayer.Services.IServices
         Task<string> GetUserRole(string email);
         Task<IEnumerable<RegistrationRequestDTO>> GetAllBrandAsync();
         Task<string> GetUserRoleById(string userId);
+        Task<string> ChangePassword(string email, string oldPassword, string newPassword);
     }
 }

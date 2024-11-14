@@ -11,32 +11,34 @@
         </a>
       </div>
       <div class="user-dropdown">
-        <div class="btn-group">
-
-          <a class="nav-link dropdown-toggle text-nowrap px-3" data-bs-toggle="dropdown" role="button"
-            aria-haspopup="true" aria-expanded="false">
-            <img class="user-avatar rounded-circle mr-2" src="/assets/images/UserProfileImage.jpg" />
+        <div class="btn-group" (click)="toggleDropdown()">
+          <a class="nav-link dropdown-toggle text-nowrap px-3" role="button" aria-haspopup="true" aria-expanded="false">
+            <img class="user-avatar rounded-circle mr-2" [src]="userAvatar" alt="User Avatar" />
             &nbsp;
-            <span class="d-none d-md-inline-block">Razz Suwal</span>
+            <span class="d-none d-md-inline-block">{{ userName || 'Guest' }}</span>
           </a>
-          <!-- <ul class="dropdown-menu">
-                    <li>
 
-                        <a class="dropdown-item" href="/admin/appuser/changepassword/@User.Identity.GetAppUserUserId()">
-                            <i class="material-icons">vertical_split</i> Change Password
-                        </a>
-                    </li>
+          <!-- Dropdown Menu -->
+          <ul class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}">
+            <li>
+              <a routerLink="/changePassword" class="dropdown-item" >
+                <i class="fa-solid fa-pencil"></i> Change Password
+              </a>
+            </li>
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>  <a class="dropdown-item text-danger" href="/account/logout">
-                        <i class="material-icons text-danger">&#xE879;</i> Logout
-                    </a></li>
-                </ul> -->
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item text-danger" (click)="onLogout()">
+                <i class="fa-solid fa-right-from-bracket text-danger"></i> Logout
+              </a>
+            </li>
+          </ul>
         </div>
-
       </div>
+
     </div>
   </div>
 </header>

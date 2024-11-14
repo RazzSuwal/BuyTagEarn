@@ -14,6 +14,7 @@ import { ProductComponent } from './brand/product/product.component';
 import { BrandDetailsComponent } from './admin/brand-details/brand-details.component';
 import { BrandproductsComponent } from './admin/brandproducts/brandproducts.component';
 import { UserEarnComponent } from './user/user-earn/user-earn.component';
+import { ChangepasswordComponent } from './shared/changepassword/changepassword.component';
 
 export const routes: Routes = [
     { path: '', component: DashboardComponent },
@@ -30,5 +31,5 @@ export const routes: Routes = [
     { path: 'brand', component: BrandDetailsComponent, canActivate: [authGuard] },
     { path: 'brandProduct', component: BrandproductsComponent, canActivate: [authGuard] },
     { path: 'user-earn', component: UserEarnComponent, canActivate: [authGuard] },
-
+    { path: 'changePassword', component: ChangepasswordComponent, canActivate: [authGuard] },
 ];

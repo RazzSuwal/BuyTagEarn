@@ -13,17 +13,47 @@ namespace SMM.Areas.Identity.Controllers
         private readonly IAuthService _authService;
         private readonly AppDbContext _db;
         protected ResponseDTO _response;
+        private readonly IEmailSender _emailSender;
 
-        public UsersController(IAuthService authService, AppDbContext db)
+        public UsersController(IAuthService authService, AppDbContext db, IEmailSender emailSender)
         {
             _authService = authService;
             _response = new();
             _db = db;
+            _emailSender = emailSender;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDTO model)
         {
+            //Email
+            var receiver = model.Email;
+            var subject = string.Empty;
+            var message = string.Empty;
+            if (model.Role == "BRAND")
+            {
+                subject = "Reset Your Password";
+                message = $"Hello {model.Name},\n\n" +
+                              "We have set a new password for your account. " +
+                              "Your new password is: " + model.Password + "\n\n" +
+                              "Please change your password from the following URL:\n" +
+                              "http://localhost:53430/changePassword\n\n" +
+                              "If you did not request this change, please contact support immediately.";
+
+            }
+            else
+            {
+                subject = "Account Creation Successful - Verify Your Email";
+                message = $"Dear {model.Name},\n\n" +
+                              "You have successfully created your account. " +
+                              "Please verify that it was you by clicking the link below:\n" +
+                              "<Insert Verification Link Here>\n\n" +
+                              "If you did not create this account, please contact support immediately.";
+
+
+            }
+            await _emailSender.SendEmailAsync(receiver, subject, message);
+
             var errorMessage = await _authService.Register(model);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -86,6 +116,28 @@ namespace SMM.Areas.Identity.Controllers
         //    return Ok(result);
         //}
 
+        [HttpPost("ChangePassword")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDTO model)
+        {
+            if (model == null || string.IsNullOrEmpty(model.OldPassword) || string.IsNullOrEmpty(model.NewPassword))
+            {
+                _response.Success = false;
+                _response.Message = "Old and new password must be provided.";
+                return BadRequest(_response);
+            }
+
+            var result = await _authService.ChangePassword(model.Email, model.OldPassword, model.NewPassword);
+            if (result == "Password changed successfully!")
+            {
+                _response.Success = true;
+                _response.Message = result;
+                return Ok(_response);
+            }
+            _response.Success = false;
+            _response.Message = result;
+            return BadRequest(_response);
+        }
     }
 }
 
