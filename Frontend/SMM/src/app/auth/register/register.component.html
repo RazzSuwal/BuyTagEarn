@@ -63,24 +63,41 @@
                                 <div>
                                     <label  class="mb-2">Name</label>
                                     <input formControlName="name" type="text" class="form-control" placeholder="">
-                                    <span class="text-danger" style="color:orangered"></span>
+                                    <div *ngIf="submitted && f['name'].errors" class="form-text">
+                                        <div *ngIf="f['name'].errors['required']">
+                                            <span class="text-danger" style="color:orangered">Name is required</span>
+                                        </div>
+                                      </div>
+                                    
                                 </div>
                                 <!-- col -->
                                 <div>
                                     <label class="mb-2">Email</label>
                                     <input formControlName="email" type="email" class="form-control" placeholder="">
-                                    <span class="text-danger" style="color:orangered"></span>
+                                    <div *ngIf="submitted && f['name'].errors" class="form-text">
+                                        <div *ngIf="f['name'].errors['required']">
+                                            <span class="text-danger" style="color:orangered">Name is required</span>
+                                        </div>
+                                      </div>
                                 </div>
                                 <div>
                                     <label class="mb-2">PhoneNumber</label>
                                     <input formControlName="phoneNumber" type="text" class="form-control">
-                                    <span class="text-danger" style="color:orangered"></span>
+                                    <div *ngIf="submitted && f['phoneNumber'].errors" class="form-text">
+                                        <div *ngIf="f['phoneNumber'].errors['required']">
+                                            <span class="text-danger" style="color:orangered">Phone Number is required</span>
+                                        </div>
+                                      </div>
                                 </div>
                                 <div>
                                     <label class="mb-2">Password</label>
                                     <input formControlName="password" type="password" class="password-input"
                                            placeholder="●●●●●●●">
-                                    <span class="text-danger" style="color:orangered"></span>
+                                           <div *ngIf="submitted && f['password'].errors" class="form-text">
+                                            <div *ngIf="f['password'].errors['required']">
+                                                <span class="text-danger" style="color:orangered">Name is required</span>
+                                            </div>
+                                          </div>
                                 </div>
                                 <div>
                                     <label class="mb-2">Re-enter Password</label>
@@ -89,12 +106,19 @@
                                                placeholder="●●●●●●●">
                                         <button class="password-toggle"></button>
                                     </div>
-                                    <span class="text-danger" style="color:orangered"></span>
+                                    <div *ngIf="submitted && f['password'].errors" class="form-text">
+                                        <div *ngIf="f['password'].errors['required']">
+                                            <span class="text-danger" style="color:orangered">Re Password is required</span>
+                                        </div>
+                                      </div>
                                 </div>
                             </div>
                             <div class="submit-btn mt-10">
-                                <button class="btn btn--full" type="submit">
+                                <button *ngIf="!loading" class="btn btn--full" type="submit">
                                     Sign up
+                                </button>
+                                <button *ngIf="loading" class="btn btn--full" type="submit">
+                                    Loading..
                                 </button>
                             </div>
                             <div class="row">

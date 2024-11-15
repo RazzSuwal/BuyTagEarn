@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   hidePwdContent: boolean = true;
   registerForm: UntypedFormGroup;
+  submitted: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -32,6 +34,13 @@ export class RegisterComponent {
   }
 
   register() {
+    this.loading = true;
+    this.submitted = true;
+    if (this.registerForm.invalid) {
+      this._commonservice.warning('Error', 'Please fill up required fields!');
+      this.loading = false;
+      return;
+    }
     let user = {
       name: this.registerForm.get('name')?.value,
       phoneNumber: this.registerForm.get('phoneNumber')?.value,
@@ -44,7 +53,14 @@ export class RegisterComponent {
         // this.open(res, 'OK');
         this.router.navigate(['/dashboard']);
         this._commonservice.successAlert("Success", "Register SuccessFul!");
+        this.loading = false;
       },
     });
+    this.loading = false;
   }
+
+  get f() {
+    return this.registerForm.controls;
+  }
+
 }

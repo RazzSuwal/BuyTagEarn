@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common/common.service';
 import { AuthserviceService } from '../../services/auth/authservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-changepassword',
@@ -18,7 +19,9 @@ export class ChangepasswordComponent {
     private fb: FormBuilder,
     private _commonservice: CommonService,
     private _authService: AuthserviceService,
+    private router: Router,
   ){
+    this.getUserDetails();
     this.changePasswordFrom = fb.group({
       oldPassword: fb.control('', [Validators.required]),
       newPassword: fb.control('', [Validators.required]),
@@ -34,14 +37,17 @@ export class ChangepasswordComponent {
     }
     this._authService.changePassword(this.userEmail, this.changePasswordFrom.get('oldPassword')?.value, this.changePasswordFrom.get('newPassword')?.value).subscribe({
       next: (res) => {
-        this._commonservice.successAlert("Success", "Submit SuccessFul!");
+        this._commonservice.successAlert("Success", "Reset SuccessFul!");
         this.changePasswordFrom.reset();
+        this._authService.logout();
+        this.router.navigate(['/login']);
 
       },
     });
   }
 
   getUserDetails() {
+    debugger
     const userDetails = this._authService.getUserDetails();
     if (userDetails) {
       this.userEmail = userDetails;

@@ -32,18 +32,27 @@
                     </div>
                     <form id="loginForm" class="form-lg form-grey" (ngSubmit)="login()" [formGroup]="loginForm">
                         <input type="hidden" />
-                        <div class="form-group ">
+                        <div class="form-group " [ngClass]="{ error: submitted && f['email'].errors }">
                             <label for="email" class="mb-2">Email</label>
                             <input id="email" formControlName="email" type="email" placeholder="example@gmail.com">
-                            <span class="text-danger" style="color:orangered"></span>
+                            <div *ngIf="submitted && f['email'].errors" class="form-text">
+                                <div *ngIf="f['email'].errors['required']">
+                                    <span class="text-danger" style="color:orangered">Email is required</span>
+                                </div>
+                              </div>
+                            
                         </div>
-                        <div class="form-group ">
+                        <div class="form-group " [ngClass]="{ error: submitted && f['password'].errors }">
                             <label for="password" id="password" class="mb-2">Password</label>
                             <div class="password-wrap">
                                 <input type="password" formControlName="password" class="password-input" asp-for="Password" autocomplete="off"
                                        placeholder="******">
                                 <button class="password-toggle"></button>
-                                <span class="text-danger" style="color:orangered"></span>
+                                <div *ngIf="submitted && f['password'].errors" class="form-text">
+                                    <div *ngIf="f['password'].errors['required']">
+                                        <span class="text-danger" style="color:orangered">Password is required</span>
+                                    </div>
+                                  </div>
                             </div>
 
                         </div>
@@ -57,7 +66,8 @@
                         </div>
 
                         <div class="submit-btn mt-10">
-                            <button value="login" id="btnLogin" name="button" class="btn btn--full" type="submit">Login</button>
+                            <button *ngIf="!loading" value="login" id="btnLogin" name="button" class="btn btn--full" type="submit">Login</button>
+                            <button *ngIf="loading" value="login" id="btnLogin" name="button" class="btn btn--full" type="submit">Loading..</button>
                         </div>
                         <br />
                         <div style="text-align:center; color:orangered">

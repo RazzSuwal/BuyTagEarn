@@ -12,6 +12,8 @@ import { CommonService } from '../../services/common/common.service';
 })
 export class LoginComponent {
   loginForm: UntypedFormGroup;
+  submitted: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +29,13 @@ export class LoginComponent {
   }
 
   login() {
+    this.loading = true;
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      this._commonservice.warning('Error', 'Please fill up required fields!');
+      this.loading = false;
+      return;
+    }
     let user = {
       userName: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
@@ -40,18 +49,24 @@ export class LoginComponent {
           // Redirect or perform other actions after successful login
           this.router.navigate(['/dashboard']);
           this._commonservice.successAlert("Success",res.message);
+          this.loading = false;
           
         } else {
           debugger
           this._commonservice.error("UnSuccessFul",res.message);
           console.error('Invalid response structure:', res);
+          this.loading = false;
         }
       },
       error: (err) => {
 
         this._commonservice.error("UnSuccessFul",err.message);
+        this.loading = false;
       }
     });
   }
-  
+ 
+  get f() {
+    return this.loginForm.controls;
+  }
 }
