@@ -84,6 +84,38 @@ namespace SMM.DataAccessLayer.Services.Services
             }
         }
 
+
+
+        public async Task<dynamic> GetProductImageByProductName(int ProductName)
+        {
+            try
+            {
+
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "";
+                    var result = new List<dynamic>();
+                        query = @"
+                            SELECT *
+                            FROM [dbo].[Product] Where ProductId = @ProductName";
+                        result = (await dbConnection.QueryAsync<dynamic>(query, new { ProductName = ProductName })).ToList();
+
+                    // Fetch the result
+                    if (result == null || !result.Any())
+                    {
+                        return "No records found for the given Type";
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+
+
         public async Task<dynamic> AprovedUserPost(int postId, int IsApproved)
         {
             try
@@ -128,14 +160,15 @@ namespace SMM.DataAccessLayer.Services.Services
                     if (productDTO.ProductId == null)
                     {
                         string query = @"
-                        INSERT INTO [dbo].[Product] ([UserId], [ProductName], [ProductType], [CreatedDate], [IsApproved])
-                        VALUES (@UserId,@ProductName,@ProductType, GETDATE(),0)";
+                        INSERT INTO [dbo].[Product] ([UserId], [ProductName], [ProductType], [CreatedDate], [IsApproved] , ImageUrl)
+                        VALUES (@UserId,@ProductName,@ProductType, GETDATE(),0, @ImageUrl)";
 
                         var parameters = new
                         {
                             UserId = productDTO.UserId,
                             ProductName = productDTO.ProductName,
                             ProductType = productDTO.ProductType,
+                            ImageUrl = productDTO.ImageUrl,
 
                         };
 
@@ -282,6 +315,31 @@ namespace SMM.DataAccessLayer.Services.Services
                     var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
 
                     return "Approved Sucessfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                return new { Error = ex.Message, StackTrace = ex.StackTrace };
+            }
+        }
+        public async Task<dynamic> DeleteProductById(int productId)
+        {
+            try
+            {
+
+                using (IDbConnection dbConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = @"Delete [dbo].[Product] WHERE ProductId = @ProductId";
+ 
+                    var parameters = new
+                    {
+                        ProductId = productId
+                    };
+
+                    // Fetch the result
+                    var result = await dbConnection.QueryAsync<dynamic>(query, parameters);
+
+                    return "Delete Sucessfully";
                 }
             }
             catch (Exception ex)

@@ -24,13 +24,16 @@
         <td>{{data.MobileNo}}</td>
         <td>{{data.Name}}</td>
         <td>{{data.RequestedDate}}</td>
-        <td *ngIf="data.IsPaid == 1">Verifying...</td>
+        <td *ngIf="data.IsPaid == 1">Paid</td>
         <td *ngIf="data.IsPaid == 0">Not Paid</td>
         <td>
-          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#voucherModal" *ngIf="data.IsPaid == 0"
+          <a href="javascript:void(0);"  *ngIf="data.IsPaid == 0"
             class="btn btn-primary" title="Pay With Khalti" onclick="window.open('https://khalti.com/', '_blank');">
             <i class="fa-solid fa-money-check"></i>
           </a>
+          <button data-bs-toggle="modal" data-bs-target="#voucherModal" (click)="upload(data.RequestId)"  class="ms-2 btn btn-primary" title="Upload Voucher">
+            <i class="fa-regular fa-file"></i>
+          </button>
           <a class="btn btn-primary ms-2" title="View Post" href="{{data.PostUrl}}" target="_blank"><i
               class="fa-solid fa-eye"></i></a>
         </td>

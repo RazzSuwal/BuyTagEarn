@@ -84,6 +84,7 @@ export class BrandDetailsComponent {
       next: (res) => {
         this._commonservice.successAlert("Success", "Brand Registered");
         this.brandForm.reset();
+        this.submitted = false;
 
         //need to work on
         // $('#exampleModal').modal('hide');

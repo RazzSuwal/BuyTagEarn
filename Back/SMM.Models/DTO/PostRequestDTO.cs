@@ -6,7 +6,7 @@ namespace SMM.Models.DTO
     {
         //public int? UserPostId { get; set; }
         public string? UserId { get; set; }
-        public int? ProductName { get; set; }
+        public int ProductName { get; set; }
         public string? PostUrl { get; set; }
         public string? BrandName { get; set; }
         public bool? IsTag { get; set; }

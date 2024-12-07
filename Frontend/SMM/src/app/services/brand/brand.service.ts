@@ -14,8 +14,13 @@ export class BrandService {
     return this.http.get(this.baseUrl + 'GetAllProductById/' + userId);
   }
 
-  CreateUpdateProduct(data: any): Observable<any> {
-    return this.http.post(this.baseUrl + 'CreateUpdateProduct', data, {
+  CreateUpdateProduct(data: any, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('ProductType', data.productType || '');
+    formData.append('ProductName', data.productName || '');
+    formData.append('ProductId', data.productId || '');
+    formData.append('file', file);
+    return this.http.post(this.baseUrl + 'CreateUpdateProduct', formData, {
       responseType: 'text',
     });
   }
@@ -27,4 +32,11 @@ export class BrandService {
   approved(productId: number, IsApproved: number): Observable<any> {
     return this.http.put(this.baseUrl + 'AprovedBrandProduct/' + productId + '/' + IsApproved, {}, { responseType: 'text' });
   }
+  deleteProductById(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}DeleteProductById/${id}`, {
+      responseType: 'text',
+    });
+  }
+  
+
 }

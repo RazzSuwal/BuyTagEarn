@@ -30,8 +30,6 @@
             <p>Posted On: {{ formatDate(postDetails.PostedOn) }}</p>
             <br>
             <p>Total Number Of Likes: {{postLikes}} </p>
-            <br>
-            <p>Total Number Of Likes: {{postLikes}} </p>
           </div>
           <span *ngIf="!showAskPayment" class="stock"><i class="fa-solid fa-hourglass-half"></i> Pending</span>
           <span *ngIf="showAskPayment" class="stock"><i class="fa-regular fa-clock"></i> Completed</span>

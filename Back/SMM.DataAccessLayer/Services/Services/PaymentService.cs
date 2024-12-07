@@ -168,7 +168,7 @@ namespace SMM.DataAccessLayer.Services.Services
                                       Left Join dbo.UserPost as p On p.UserPostId = pr.UserPostId
                                       Left Join dbo.Product as pd On pd.ProductId = p.ProductId
                                       Left Join dbo.AspNetUsers as u On u.Id = pr.PaidByUserId
-                                     Where pr.IsPaid = 1 AND pr.UserId = '367e1912-a1cb-4099-935c-6c3e66052bd9'";
+                                     Where pr.IsPaid = 1 AND pr.UserId = @UserId";
 
                     var parameters = new
                     {

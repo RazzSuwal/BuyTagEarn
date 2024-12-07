@@ -30,4 +30,8 @@
     <ProjectReference Include="..\SMM.DataAccessLayer\SMM.DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\ProductImage\" />
+  </ItemGroup>
+
 </Project>

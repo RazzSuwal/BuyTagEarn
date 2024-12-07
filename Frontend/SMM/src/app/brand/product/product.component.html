@@ -4,7 +4,7 @@
     <button (click)="add()" type="button" class="btn btn-primary" data-bs-toggle="modal"
       data-bs-target="#addProduct">Add New Product <i class="fa fa-plus" aria-hidden="true"></i></button>
   </div>
-  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="myTable">
     <thead>
       <tr>
         <th>SN</th>
@@ -16,9 +16,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngIf="requestData.length === 0">
+      <!-- <tr *ngIf="requestData.length === 0">
         <td colspan="7" class="text-center">No data available</td>
-      </tr>
+      </tr> -->
       <tr *ngFor="let data of requestData; let i = index">
         <td>{{ i + 1 }}</td>
         <td>{{data.ProductName}}</td>
@@ -30,7 +30,7 @@
         </td>
         <td>
           <button class="btn btn-primary" (click)="btnedit(data)" data-bs-toggle="modal" data-bs-target="#addProduct"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button class="btn btn-danger ms-2"><i class="fa-solid fa-trash"></i></button>
+          <button class="btn btn-danger ms-2" (click)="delete(data.ProductId)"><i class="fa-solid fa-trash"></i></button>
         </td>
 
       </tr>
@@ -80,6 +80,23 @@
               </div>
             </div>
           </div>
+
+
+          <div class="mb-3">
+            <div class="form-group" [ngClass]="{ error: submitted && f['productType'].errors }">
+              <div class="form-wrapper">
+                <label class="form-label me-2">Product Image</label>
+                <input type="file" id="file" formControlName="imageUrl" placeholder="FIle.." />
+              </div>
+              <div *ngIf="submitted && f['productType'].errors" class="form-text">
+                <div *ngIf="f['productType'].errors['required']">
+                  <span class="text-danger">Product Type is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

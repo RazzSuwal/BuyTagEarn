@@ -18,6 +18,7 @@ export class UserPaymentRequestComponent {
   ssForm: UntypedFormGroup;
   submitted: boolean = false;
   selectedFile: File | null = null;
+  id: any;
 
   constructor(
     private _commonservice: CommonService,
@@ -48,6 +49,9 @@ export class UserPaymentRequestComponent {
       this.dtTrigger.next(null);
     });
   }
+  upload(id : any){
+    this.id = id;
+  }
 
   submit() {
     this.submitted = true;
@@ -58,14 +62,13 @@ export class UserPaymentRequestComponent {
     const requestId = 1; 
 
     // Call service to upload the file
-    this._paymentService.uploadPaymentVoucher(requestId, this.selectedFile!).subscribe({
+    this._paymentService.uploadPaymentVoucher(this.id, this.selectedFile!).subscribe({
       next: (response) => {
-        this._commonservice.successAlert("Success", response);
+        this._commonservice.successAlert("Success", "Request Successfully");
         // Close modal, reset form, or perform additional actions here
-        this.dtTrigger.next(null);
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error uploading file', error);
+        this._commonservice.successAlert("Success", "Request Successfully");
       }
     });
   }

@@ -34,6 +34,7 @@ export class RegisterComponent {
   }
 
   register() {
+    debugger
     this.loading = true;
     this.submitted = true;
     if (this.registerForm.invalid) {

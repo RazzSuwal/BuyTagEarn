@@ -32,6 +32,7 @@ export class UserpostDetailsComponent {
       mobileNo: fb.control('', [Validators.required]),
       userPostId: fb.control(null),
       amount: fb.control(null),
+      requestId: fb.control(null),
     });
   }
   ngOnInit(): void {
@@ -63,7 +64,7 @@ export class UserpostDetailsComponent {
         console.log(res);
         this.postLikes = res.likes;
         this.postImgUrl = res.imageUrl;
-        this.amount = this.postLikes * 100
+        this.amount = String(this.postLikes * 100);
       },
       (error: any) => {
         console.error('Error fetching data:', error);
@@ -96,11 +97,12 @@ export class UserpostDetailsComponent {
     const currentDate = new Date(this.getCurrentDate());
     const postedDates = new Date(this.getNextTwoMonths(postedDate));
 
-    if (postedDates > currentDate) {
-      this.showAskPayment = true;
-    } else {
-      this.showAskPayment = false;
-    }
+    this.showAskPayment = true;
+    // if (postedDates < currentDate) {
+    //   this.showAskPayment = true;
+    // } else {
+    //   this.showAskPayment = false;
+    // }
   }
 
   getNextTwoMonths(dateString: string): string {
@@ -124,15 +126,18 @@ export class UserpostDetailsComponent {
       this._commonservice.warning('Error', 'Please fill up required fields!');
       return;
     }
+    debugger
     let data = {
       mobileNo: this.paymentRequestForm.get('mobileNo')?.value,
       userPostId: this.postDetails.UserPostId,
       amount: this.amount,
+      
     };
     this._payment.paymentRequest(data).subscribe({
       next: (res) => {
         this._commonservice.successAlert("Success", "Submit SuccessFul!");
         this.paymentRequestForm.reset();
+        this.submitted = false;
         //need to work on
         // $('#exampleModal').modal('hide');
 

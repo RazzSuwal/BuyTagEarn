@@ -102,12 +102,12 @@
                                 <div>
                                     <label class="mb-2">Re-enter Password</label>
                                     <div class="password-wrap">
-                                        <input type="password" class="password-input"
+                                        <input formControlName="rpassword" type="password" class="password-input"
                                                placeholder="●●●●●●●">
                                         <button class="password-toggle"></button>
                                     </div>
-                                    <div *ngIf="submitted && f['password'].errors" class="form-text">
-                                        <div *ngIf="f['password'].errors['required']">
+                                    <div *ngIf="submitted && f['rpassword'].errors" class="form-text">
+                                        <div *ngIf="f['rpassword'].errors['required']">
                                             <span class="text-danger" style="color:orangered">Re Password is required</span>
                                         </div>
                                       </div>
