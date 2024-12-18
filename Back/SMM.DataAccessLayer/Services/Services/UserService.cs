@@ -15,7 +15,7 @@ namespace SMM.DataAccessLayer.Services.Services
         {
             _configuration = configuration;
         }
-
+        //bndrapqyhcfozlek
         public async Task<string> UserPost(PostRequestDTO postRequestDTO)
         {
             try

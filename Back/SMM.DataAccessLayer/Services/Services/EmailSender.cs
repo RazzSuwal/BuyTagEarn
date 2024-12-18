@@ -9,8 +9,8 @@ namespace SMM.DataAccessLayer.Services.Services
     {
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var mail = "buytagearn@gmail.com";
-            var appPassword = "bndrapqyhcfozlek";
+            var mail = "you-gmail";
+            var appPassword = "your key";
 
             var client = new SmtpClient("smtp.gmail.com")
             {
